@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>饮食管理 - 轻卡伴侣</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- 顶部导航 -->
+  <header class="bg-white px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10">
+    <h1 class="text-lg font-medium">饮食管理</h1>
+    <div class="flex items-center space-x-2">
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+      </button>
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="px-4 py-4">
+    <!-- 日期选择器 -->
+    <div class="flex items-center justify-between mb-5 slide-up">
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <div class="text-center">
+        <p class="text-sm text-gray-500">2023年7月</p>
+        <p class="text-xl font-bold">7月14日 星期五</p>
+      </div>
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 卡路里摄入概览 -->
+    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.1s">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-medium">热量摄入</h3>
+        <span class="text-sm text-indigo-600 font-medium">1200/1500 大卡</span>
+      </div>
+      
+      <div class="h-32 mb-4">
+        <canvas id="caloriesChart"></canvas>
+      </div>
+      
+      <div class="grid grid-cols-4 gap-2 text-center">
+        <div>
+          <p class="text-xs text-gray-500">早餐</p>
+          <p class="font-medium text-sm">350 <span class="text-xs text-gray-500">大卡</span></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">午餐</p>
+          <p class="font-medium text-sm">450 <span class="text-xs text-gray-500">大卡</span></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">晚餐</p>
+          <p class="font-medium text-sm">320 <span class="text-xs text-gray-500">大卡</span></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500">加餐</p>
+          <p class="font-medium text-sm">80 <span class="text-xs text-gray-500">大卡</span></p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 营养素分布 -->
+    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.2s">
+      <h3 class="font-medium mb-3">营养素分布</h3>
+      
+      <div class="flex items-center mb-5">
+        <div class="w-24 h-24 mr-6">
+          <canvas id="nutritionChart"></canvas>
+        </div>
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center">
+            <span class="w-3 h-3 rounded-full bg-blue-500 mr-2"></span>
+            <span class="text-sm mr-auto">碳水化合物</span>
+            <span class="text-sm font-medium">140g (47%)</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+            <span class="text-sm mr-auto">蛋白质</span>
+            <span class="text-sm font-medium">75g (25%)</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+            <span class="text-sm mr-auto">脂肪</span>
+            <span class="text-sm font-medium">45g (28%)</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-3 text-center text-xs">
+        <div class="py-2 px-1 rounded-lg bg-blue-50">
+          <p class="text-gray-500 mb-1">纤维素</p>
+          <p class="font-medium">12g</p>
+        </div>
+        <div class="py-2 px-1 rounded-lg bg-blue-50">
+          <p class="text-gray-500 mb-1">钠</p>
+          <p class="font-medium">1.8g</p>
+        </div>
+        <div class="py-2 px-1 rounded-lg bg-blue-50">
+          <p class="text-gray-500 mb-1">钾</p>
+          <p class="font-medium">1.2g</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 今日饮食记录 -->
+    <h3 class="font-medium mb-3 slide-up" style="animation-delay: 0.3s">今日饮食记录</h3>
+    
+    <div class="space-y-3 slide-up" style="animation-delay: 0.4s">
+      <!-- 早餐 -->
+      <div class="card p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h4 class="font-medium">早餐</h4>
+          <span class="text-xs text-gray-500">07:30</span>
+        </div>
+        
+        <div class="flex items-center">
+          <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="早餐" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+              <h5 class="font-medium">全麦面包 + 牛奶</h5>
+              <span class="text-sm font-medium text-indigo-600">350 大卡</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">2片全麦吐司 + 1杯低脂牛奶 + 1个鸡蛋</p>
+            <div class="flex text-xs text-gray-500">
+              <span class="mr-2">碳水: 40g</span>
+              <span class="mr-2">蛋白质: 18g</span>
+              <span>脂肪: 12g</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 午餐 -->
+      <div class="card p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h4 class="font-medium">午餐</h4>
+          <span class="text-xs text-gray-500">12:15</span>
+        </div>
+        
+        <div class="flex items-center">
+          <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="午餐" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+              <h5 class="font-medium">鸡胸肉沙拉</h5>
+              <span class="text-sm font-medium text-indigo-600">450 大卡</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">烤鸡胸肉 + 混合蔬菜 + 藜麦</p>
+            <div class="flex text-xs text-gray-500">
+              <span class="mr-2">碳水: 45g</span>
+              <span class="mr-2">蛋白质: 35g</span>
+              <span>脂肪: 15g</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 晚餐 -->
+      <div class="card p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h4 class="font-medium">晚餐</h4>
+          <span class="text-xs text-gray-500">18:45</span>
+        </div>
+        
+        <div class="flex items-center">
+          <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="晚餐" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+              <h5 class="font-medium">清蒸鱼 + 时蔬</h5>
+              <span class="text-sm font-medium text-indigo-600">320 大卡</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">清蒸鲈鱼 + 西兰花 + 少量糙米</p>
+            <div class="flex text-xs text-gray-500">
+              <span class="mr-2">碳水: 30g</span>
+              <span class="mr-2">蛋白质: 28g</span>
+              <span>脂肪: 12g</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 添加按钮 -->
+      <button class="w-full py-3 text-center text-indigo-600 border border-dashed border-indigo-300 rounded-lg bg-indigo-50">
+        <div class="flex items-center justify-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span>添加餐食记录</span>
+        </div>
+      </button>
+    </div>
+    
+    <!-- AI推荐 -->
+    <div class="mt-6 mb-3 slide-up" style="animation-delay: 0.5s">
+      <h3 class="font-medium">智能推荐</h3>
+      <p class="text-sm text-gray-500">基于你的饮食习惯和减重目标</p>
+    </div>
+    
+    <div class="overflow-x-auto pb-4 slide-up" style="animation-delay: 0.6s">
+      <div class="flex space-x-4" style="width: fit-content">
+        <div class="card p-3 w-64 flex-shrink-0">
+          <div class="h-36 rounded-lg overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&h=200&q=80" alt="推荐餐" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-medium">地中海风情沙拉</h4>
+          <p class="text-sm text-gray-600 mb-2">低卡高蛋白，富含多种维生素</p>
+          <div class="flex justify-between text-sm">
+            <span class="font-medium text-indigo-600">380大卡</span>
+            <span class="text-gray-500">蛋白质: 25g</span>
+          </div>
+        </div>
+        
+        <div class="card p-3 w-64 flex-shrink-0">
+          <div class="h-36 rounded-lg overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&h=200&q=80" alt="推荐餐" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-medium">藜麦鸡肉碗</h4>
+          <p class="text-sm text-gray-600 mb-2">均衡搭配，易于消化吸收</p>
+          <div class="flex justify-between text-sm">
+            <span class="font-medium text-indigo-600">420大卡</span>
+            <span class="text-gray-500">蛋白质: 32g</span>
+          </div>
+        </div>
+        
+        <div class="card p-3 w-64 flex-shrink-0">
+          <div class="h-36 rounded-lg overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1532980400857-e8d9d275d858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&h=200&q=80" alt="推荐餐" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-medium">日式味增汤</h4>
+          <p class="text-sm text-gray-600 mb-2">低热量高饱腹感，适合晚餐</p>
+          <div class="flex justify-between text-sm">
+            <span class="font-medium text-indigo-600">220大卡</span>
+            <span class="text-gray-500">蛋白质: 15g</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部占位，防止内容被底部导航栏遮挡 -->
+  <div class="h-16"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 热量分布图表
+      const caloriesCtx = document.getElementById('caloriesChart').getContext('2d');
+      
+      const caloriesData = [350, 450, 320, 80];
+      const caloriesLabels = ['早餐', '午餐', '晚餐', '加餐'];
+      const caloriesColors = [
+        'rgba(59, 130, 246, 0.8)',
+        'rgba(16, 185, 129, 0.8)',
+        'rgba(249, 115, 22, 0.8)',
+        'rgba(139, 92, 246, 0.8)'
+      ];
+      
+      new Chart(caloriesCtx, {
+        type: 'bar',
+        data: {
+          labels: caloriesLabels,
+          datasets: [{
+            data: caloriesData,
+            backgroundColor: caloriesColors,
+            borderRadius: 6,
+            barThickness: 30
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: '#1F2937',
+              titleFont: {
+                size: 13
+              },
+              bodyFont: {
+                size: 13
+              },
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return context.raw + ' 大卡';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                display: true,
+                color: 'rgba(0, 0, 0, 0.05)',
+                drawBorder: false
+              },
+              ticks: {
+                font: {
+                  size: 10
+                }
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                font: {
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // 营养素分布饼图
+      const nutritionCtx = document.getElementById('nutritionChart').getContext('2d');
+      
+      new Chart(nutritionCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['碳水', '蛋白质', '脂肪'],
+          datasets: [{
+            data: [47, 25, 28],
+            backgroundColor: [
+              'rgba(59, 130, 246, 0.8)',
+              'rgba(16, 185, 129, 0.8)',
+              'rgba(245, 158, 11, 0.8)'
+            ],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: '#1F2937',
+              titleFont: {
+                size: 13
+              },
+              bodyFont: {
+                size: 13
+              },
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.raw + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // 添加波纹效果
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.classList.add('ripple');
+      });
+    });
+  </script>
+</body>
+</html> 

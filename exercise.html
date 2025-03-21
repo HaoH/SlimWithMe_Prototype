@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运动促进 - 轻卡伴侣</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- 顶部导航 -->
+  <header class="bg-white px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10">
+    <h1 class="text-lg font-medium">运动促进</h1>
+    <div>
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="px-4 py-5">
+    <!-- 日期选择器 -->
+    <div class="flex items-center justify-between mb-5 slide-up">
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <div class="text-center">
+        <p class="text-sm text-gray-500">本周运动数据</p>
+        <p class="text-xl font-bold">7月8日 - 7月14日</p>
+      </div>
+      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 步数圆环 -->
+    <div class="card p-5 mb-5 slide-up" style="animation-delay: 0.1s">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-medium">今日步数</h3>
+        <span class="text-sm text-indigo-600 font-medium">达标率: 82%</span>
+      </div>
+      
+      <div class="flex justify-between items-center">
+        <div class="w-32 h-32 relative">
+          <canvas id="stepsDonut"></canvas>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-3xl font-bold text-indigo-600">6,543</span>
+            <span class="text-xs text-gray-500">/ 8,000 步</span>
+          </div>
+        </div>
+        
+        <div class="flex-1 ml-5">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-indigo-50 p-3 rounded-lg">
+              <p class="text-xs text-gray-500 mb-1">消耗热量</p>
+              <p class="text-xl font-medium text-indigo-600">248<span class="text-xs ml-1">大卡</span></p>
+            </div>
+            <div class="bg-green-50 p-3 rounded-lg">
+              <p class="text-xs text-gray-500 mb-1">活动时间</p>
+              <p class="text-xl font-medium text-green-600">46<span class="text-xs ml-1">分钟</span></p>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-lg">
+              <p class="text-xs text-gray-500 mb-1">距离</p>
+              <p class="text-xl font-medium text-blue-600">4.8<span class="text-xs ml-1">公里</span></p>
+            </div>
+            <div class="bg-purple-50 p-3 rounded-lg">
+              <p class="text-xs text-gray-500 mb-1">楼层</p>
+              <p class="text-xl font-medium text-purple-600">12<span class="text-xs ml-1">层</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 周运动趋势 -->
+    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.2s">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-medium">周运动趋势</h3>
+        <select class="text-xs py-1 px-2 rounded border border-gray-300 bg-white">
+          <option>步数</option>
+          <option>热量</option>
+          <option>距离</option>
+        </select>
+      </div>
+      
+      <div class="h-48">
+        <canvas id="weeklyChart"></canvas>
+      </div>
+      
+      <div class="flex justify-between mt-2 text-xs text-gray-500">
+        <div class="text-center">
+          <div class="w-6 h-1 bg-indigo-500 mx-auto mb-1 rounded-full"></div>
+          <p>周一</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-indigo-500 mx-auto mb-1 rounded-full"></div>
+          <p>周二</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-indigo-500 mx-auto mb-1 rounded-full"></div>
+          <p>周三</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-indigo-500 mx-auto mb-1 rounded-full"></div>
+          <p>周四</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-indigo-600 mx-auto mb-1 rounded-full"></div>
+          <p>周五</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-gray-300 mx-auto mb-1 rounded-full"></div>
+          <p>周六</p>
+        </div>
+        <div class="text-center">
+          <div class="w-6 h-1 bg-gray-300 mx-auto mb-1 rounded-full"></div>
+          <p>周日</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 运动分析 -->
+    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.3s">
+      <h3 class="font-medium mb-3">步态分析</h3>
+      
+      <div class="flex justify-between items-center mb-3">
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium">平均步频</p>
+            <p class="text-xs text-gray-500">每分钟步数</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xl font-bold text-blue-600">112<span class="text-sm ml-1">步/分</span></p>
+        </div>
+      </div>
+      
+      <div class="h-px bg-gray-200 my-3"></div>
+      
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium">有效运动时间</p>
+            <p class="text-xs text-gray-500">持续10分钟以上的运动</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xl font-bold text-green-600">46<span class="text-sm ml-1">分钟</span></p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 推荐运动 -->
+    <h3 class="font-medium mb-3 slide-up" style="animation-delay: 0.4s">推荐运动</h3>
+    
+    <div class="space-y-4 slide-up" style="animation-delay: 0.5s">
+      <!-- 运动推荐项 -->
+      <div class="card p-4 flex">
+        <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="散步" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between items-center mb-1">
+            <h4 class="font-medium">傍晚散步</h4>
+            <span class="text-xs px-2 py-0.5 bg-indigo-100 text-indigo-600 rounded-full">推荐</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">30分钟中等速度散步，消耗约120大卡</p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-2">
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">低强度</span>
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">户外</span>
+            </div>
+            <button class="text-indigo-600 text-sm">开始</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-4 flex">
+        <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+          <img src="https://images.unsplash.com/photo-1599447292180-45d5c5d5eb89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="瑜伽" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between items-center mb-1">
+            <h4 class="font-medium">办公室伸展瑜伽</h4>
+            <span class="text-xs px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full">15分钟</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">缓解久坐疲劳，促进血液循环</p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-2">
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">办公室</span>
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">视频指导</span>
+            </div>
+            <button class="text-indigo-600 text-sm">查看</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-4 flex">
+        <div class="w-20 h-20 bg-gray-200 rounded-lg mr-3 overflow-hidden flex-shrink-0">
+          <img src="https://images.unsplash.com/photo-1434596922112-19c563067271?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="登楼梯" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between items-center mb-1">
+            <h4 class="font-medium">登楼梯挑战</h4>
+            <span class="text-xs px-2 py-0.5 bg-green-100 text-green-600 rounded-full">高效燃脂</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">10分钟快速上下楼梯，消耗约80大卡</p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-2">
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">中强度</span>
+              <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full">随时可做</span>
+            </div>
+            <button class="text-indigo-600 text-sm">记录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 提示卡片 -->
+    <div class="mt-6 p-4 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md slide-up" style="animation-delay: 0.6s">
+      <div class="flex">
+        <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-medium text-lg text-white mb-1">今日提示</h4>
+          <p class="text-sm text-white/90 mb-3">检测到您已连续久坐3小时，建议起身活动5分钟，促进血液循环</p>
+          <div class="flex space-x-3">
+            <button class="py-1.5 px-3 bg-white/20 rounded-lg text-sm backdrop-blur-sm">
+              稍后提醒
+            </button>
+            <button class="py-1.5 px-3 bg-white text-indigo-600 rounded-lg text-sm font-medium">
+              马上活动
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部占位，防止内容被底部导航栏遮挡 -->
+  <div class="h-16"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 步数环形图
+      const stepsCtx = document.getElementById('stepsDonut').getContext('2d');
+      
+      new Chart(stepsCtx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [6543, 1457],
+            backgroundColor: [
+              'rgba(79, 70, 229, 1)',
+              'rgba(229, 231, 235, 1)'
+            ],
+            borderWidth: 0,
+            cutout: '75%'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          }
+        }
+      });
+      
+      // 周运动趋势图
+      const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+      
+      const weeklyData = [7800, 9200, 8500, 7600, 6543, 0, 0];
+      const weeklyLabels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+      
+      const gradient = weeklyCtx.createLinearGradient(0, 0, 0, 250);
+      gradient.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
+      gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
+      
+      new Chart(weeklyCtx, {
+        type: 'line',
+        data: {
+          labels: weeklyLabels,
+          datasets: [{
+            label: '步数',
+            data: weeklyData,
+            fill: true,
+            backgroundColor: gradient,
+            borderColor: '#4F46E5',
+            borderWidth: 2,
+            pointBackgroundColor: '#FFFFFF',
+            pointBorderColor: '#4F46E5',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              backgroundColor: '#1F2937',
+              titleFont: {
+                size: 13
+              },
+              bodyFont: {
+                size: 13
+              },
+              padding: 12,
+              displayColors: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 5000,
+              max: 12000,
+              grid: {
+                display: true,
+                color: 'rgba(0, 0, 0, 0.05)',
+                drawBorder: false
+              },
+              ticks: {
+                font: {
+                  size: 10
+                }
+              }
+            },
+            x: {
+              display: false
+            }
+          }
+        }
+      });
+      
+      // 添加波纹效果
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.classList.add('ripple');
+      });
+    });
+  </script>
+</body>
+</html> 
