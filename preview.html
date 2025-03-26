@@ -119,32 +119,42 @@
       margin-right: 6px;
     }
     
-    .wifi::before {
-      content: '';
+    .wifi-arc-1, .wifi-arc-2, .wifi-arc-3 {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 15px;
-      height: 15px;
-      border: 2px solid #000;
-      border-radius: 50%;
-      border-bottom-color: transparent;
-      border-left-color: transparent;
-      transform: rotate(45deg);
+      left: 50%;
+      bottom: 0;
+      border: 1px solid #000;
+      border-bottom: none;
+      border-radius: 50% 50% 0 0;
+      transform: translateX(-50%);
     }
     
-    .wifi::after {
-      content: '';
+    .wifi-arc-1 {
+      width: 12px;
+      height: 6px;
+    }
+    
+    .wifi-arc-2 {
+      width: 8px;
+      height: 4px;
+      bottom: 3px;
+    }
+    
+    .wifi-arc-3 {
+      width: 4px;
+      height: 2px;
+      bottom: 5px;
+    }
+    
+    .wifi-dot {
       position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 7px;
-      height: 7px;
-      border: 2px solid #000;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      height: 2px;
+      background-color: #000;
       border-radius: 50%;
-      border-bottom-color: transparent;
-      border-left-color: transparent;
-      transform: rotate(45deg);
+      transform: translateX(-50%);
     }
     
     .battery {
@@ -273,7 +283,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -305,7 +320,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -337,7 +357,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -369,7 +394,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -401,7 +431,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -433,7 +468,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -465,7 +505,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -497,7 +542,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -529,7 +579,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -561,7 +616,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -593,7 +653,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -625,7 +690,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -657,7 +727,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -689,7 +764,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -721,7 +801,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>
@@ -753,7 +838,12 @@
                   <div class="signal-bar"></div>
                   <div class="signal-bar"></div>
                 </div>
-                <div class="wifi"></div>
+                <div class="wifi">
+                  <div class="wifi-arc-1"></div>
+                  <div class="wifi-arc-2"></div>
+                  <div class="wifi-arc-3"></div>
+                  <div class="wifi-dot"></div>
+                </div>
                 <div class="battery">
                   <div class="battery-level"></div>
                 </div>

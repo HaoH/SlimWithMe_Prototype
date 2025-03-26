@@ -26,6 +26,15 @@
       position: relative;
     }
     
+    /* 添加顶部安全区域 */
+    .safe-area-top {
+      height: 20px;
+      background-color: #000;
+      width: 100%;
+      position: relative;
+      z-index: 20;
+    }
+    
     .camera-viewfinder {
       flex: 1;
       position: relative;
@@ -253,6 +262,7 @@
 </head>
 <body>
   <div class="camera-container">
+    <div class="safe-area-top"></div>
     <div class="camera-viewfinder">
       <div class="camera-preview"></div>
       
