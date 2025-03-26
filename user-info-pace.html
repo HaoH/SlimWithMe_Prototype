@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻卡伴侣 - 减重节奏</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 20px;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background-color: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background-color: #48bb78;
+      width: 100%;
+    }
+    
+    .btn-primary {
+      background-color: #48bb78;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 18px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .pace-option {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .pace-option.selected {
+      border-color: #48bb78;
+      background-color: #f0fff4;
+    }
+    
+    .pace-title {
+      font-weight: 600;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .pace-badge {
+      background-color: #ebf8ff;
+      color: #3182ce;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .selected .pace-badge.easy {
+      background-color: #e6fffa;
+      color: #38b2ac;
+    }
+    
+    .selected .pace-badge.moderate {
+      background-color: #fffaf0;
+      color: #ed8936;
+    }
+    
+    .selected .pace-badge.intense {
+      background-color: #fff5f5;
+      color: #e53e3e;
+    }
+    
+    .pace-bar {
+      height: 6px;
+      background-color: #edf2f7;
+      border-radius: 3px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    
+    .pace-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+    
+    .pace-easy .pace-bar-fill {
+      width: 33%;
+      background-color: #38b2ac;
+    }
+    
+    .pace-moderate .pace-bar-fill {
+      width: 66%;
+      background-color: #ed8936;
+    }
+    
+    .pace-intense .pace-bar-fill {
+      width: 100%;
+      background-color: #e53e3e;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <div class="info-container">
+    <div class="mt-4">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h1 class="text-2xl font-bold text-center text-gray-800 mt-8">您希望以什么速度减重？</h1>
+      <p class="text-center text-gray-600 mt-2">选择适合您的减重节奏</p>
+    </div>
+    
+    <div class="flex-grow overflow-auto py-6">
+      <div class="max-w-sm mx-auto">
+        <div class="pace-option pace-easy" onclick="selectPace(this, 'easy')">
+          <div class="pace-title">
+            <span>稳步减重</span>
+            <span class="pace-badge easy">轻松</span>
+          </div>
+          <p class="text-gray-600 text-sm">每周减重0.25-0.5公斤，舒适且容易坚持</p>
+          <div class="pace-bar">
+            <div class="pace-bar-fill"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">预计完成目标需要20-24周</p>
+        </div>
+        
+        <div class="pace-option pace-moderate" onclick="selectPace(this, 'moderate')">
+          <div class="pace-title">
+            <span>均衡减重</span>
+            <span class="pace-badge moderate">适中</span>
+          </div>
+          <p class="text-gray-600 text-sm">每周减重0.5-0.75公斤，平衡健康与效率</p>
+          <div class="pace-bar">
+            <div class="pace-bar-fill"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">预计完成目标需要12-16周</p>
+        </div>
+        
+        <div class="pace-option pace-intense" onclick="selectPace(this, 'intense')">
+          <div class="pace-title">
+            <span>快速减重</span>
+            <span class="pace-badge intense">挑战</span>
+          </div>
+          <p class="text-gray-600 text-sm">每周减重0.75-1公斤，需要更严格的饮食控制</p>
+          <div class="pace-bar">
+            <div class="pace-bar-fill"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">预计完成目标需要8-12周</p>
+        </div>
+        
+        <div class="bg-blue-50 rounded-lg p-4 mt-4">
+          <div class="flex">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            <p class="text-sm text-blue-700">健康减重速度因人而异，我们会根据您的情况进行调整，确保您在减重过程中保持健康。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mb-10">
+      <a href="weight-plan.html" class="btn-primary block shadow-lg">
+        生成我的减重计划
+      </a>
+    </div>
+  </div>
+  
+  <script>
+    function selectPace(element, pace) {
+      // 移除其他选项的选中状态
+      const options = document.querySelectorAll('.pace-option');
+      options.forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // 给当前选项添加选中状态
+      element.classList.add('selected');
+    }
+  </script>
+</body>
+</html> 
