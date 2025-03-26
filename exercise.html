@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>轻卡伴侣 - 运动</title>
+  <title>轻卡伴侣 - 运动记录</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,221 +13,196 @@
     <!-- 顶部安全区域 - 适配刘海屏 -->
     <div class="safe-area-top bg-white"></div>
     
+    <!-- 页面头部 -->
+    <header class="bg-white p-4 shadow-sm">
+      <div class="flex justify-between items-center">
+        <h1 class="text-xl font-bold">运动记录</h1>
+        <button class="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    
     <!-- 页面内容区域 -->
     <main class="flex-1 overflow-y-auto pb-16" id="main-content">
-      <!-- 标题栏 -->
-      <div class="p-4 border-b border-gray-100 flex justify-between items-center">
-        <h1 class="text-xl font-bold">运动管理</h1>
-        <div class="flex">
-          <button class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </button>
-        </div>
-      </div>
-      
-      <!-- 活动统计卡片 -->
       <div class="p-4">
-        <div class="bg-indigo-600 rounded-2xl shadow-sm p-4 text-white">
-          <h2 class="text-lg font-semibold mb-3 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            今日活动
-          </h2>
+        <!-- 今日运动数据 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <h2 class="text-base font-semibold mb-3">今日运动数据</h2>
           
-          <div class="grid grid-cols-3 mb-3">
-            <div class="text-center">
-              <p class="text-2xl font-bold">2,456</p>
-              <p class="text-xs opacity-80">步数</p>
+          <div class="grid grid-cols-3 gap-3 mb-4">
+            <div class="bg-blue-50 rounded-lg p-3 text-center">
+              <p class="text-sm text-gray-500 mb-1">步数</p>
+              <p class="text-xl font-bold text-blue-600">7,825</p>
+              <p class="text-xs text-gray-500">目标 10,000</p>
+              <div class="h-1 w-full bg-blue-200 rounded-full mt-2">
+                <div class="h-full bg-blue-600 rounded-full" style="width: 78%"></div>
+              </div>
             </div>
-            <div class="text-center border-l border-r border-white/30">
-              <p class="text-2xl font-bold">1.8</p>
-              <p class="text-xs opacity-80">公里</p>
+            <div class="bg-green-50 rounded-lg p-3 text-center">
+              <p class="text-sm text-gray-500 mb-1">消耗</p>
+              <p class="text-xl font-bold text-green-600">320</p>
+              <p class="text-xs text-gray-500">目标 500 千卡</p>
+              <div class="h-1 w-full bg-green-200 rounded-full mt-2">
+                <div class="h-full bg-green-600 rounded-full" style="width: 64%"></div>
+              </div>
             </div>
-            <div class="text-center">
-              <p class="text-2xl font-bold">126</p>
-              <p class="text-xs opacity-80">千卡</p>
+            <div class="bg-purple-50 rounded-lg p-3 text-center">
+              <p class="text-sm text-gray-500 mb-1">距离</p>
+              <p class="text-xl font-bold text-purple-600">5.3</p>
+              <p class="text-xs text-gray-500">目标 8.0 公里</p>
+              <div class="h-1 w-full bg-purple-200 rounded-full mt-2">
+                <div class="h-full bg-purple-600 rounded-full" style="width: 66%"></div>
+              </div>
             </div>
           </div>
           
-          <div class="bg-white/20 rounded-lg p-3 backdrop-blur-sm">
-            <div class="flex justify-between items-center mb-2">
-              <p class="text-sm font-medium">目标步数</p>
-              <p class="text-sm font-semibold">2,456 / 8,000 步</p>
-            </div>
-            <div class="h-2 bg-white/30 rounded-full overflow-hidden">
-              <div class="bg-white h-full rounded-full" style="width: 30%"></div>
+          <div class="bg-indigo-50 rounded-lg p-3">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center">
+                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3 text-indigo-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium">今日活跃时间</p>
+                  <p class="text-xs text-gray-500">继续保持，还差1,250步达成目标</p>
+                </div>
+              </div>
+              <p class="text-xl font-bold text-indigo-600">45<span class="text-sm font-normal"> 分钟</span></p>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- 一周趋势图表 -->
-      <div class="px-4 mb-4">
-        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+        
+        <!-- 周运动图表 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <h2 class="text-base font-semibold mb-3">本周运动趋势</h2>
+          <canvas id="exerciseChart" height="200"></canvas>
+        </div>
+        
+        <!-- 今日运动记录 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-base font-semibold">今日运动记录</h2>
+            <button class="bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-full flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              一周运动趋势
-            </h3>
-            <select class="text-sm bg-gray-100 rounded px-2 py-1 border-none">
-              <option>步数</option>
-              <option>消耗</option>
-            </select>
+              添加运动
+            </button>
           </div>
           
-          <div class="h-48">
-            <canvas id="activityChart"></canvas>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium">步行</p>
+                  <p class="text-xs text-gray-500">08:30 - 09:15 · 45分钟</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-blue-600">180 千卡</p>
+                <p class="text-xs text-gray-500">3.2 公里 · 4,250 步</p>
+              </div>
+            </div>
+            
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-3 text-green-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium">骑行</p>
+                  <p class="text-xs text-gray-500">18:00 - 18:25 · 25分钟</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-green-600">140 千卡</p>
+                <p class="text-xs text-gray-500">4.5 公里 · 16 km/h</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <!-- 运动记录 -->
-      <div class="px-4 mb-4">
-        <h3 class="text-lg font-semibold mb-3">最近运动记录</h3>
         
-        <!-- 记录项 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100 mb-3">
-          <div class="flex justify-between items-start">
+        <!-- 运动建议 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <h2 class="text-base font-semibold mb-3">运动建议</h2>
+          
+          <div class="p-3 bg-blue-50 rounded-lg mb-3 border border-blue-100">
             <div class="flex">
-              <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 mr-3">
+              <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 flex-shrink-0 text-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold">快走</h4>
-                <p class="text-sm text-gray-500">今天 08:30 - 09:15</p>
+                <p class="text-sm font-medium text-blue-800 mb-1">完成今日步数目标</p>
+                <p class="text-xs text-blue-600">根据您的当前步数，建议傍晚再散步15-20分钟，即可达成今日10,000步的目标。</p>
               </div>
-            </div>
-            <div class="text-right">
-              <p class="font-semibold text-indigo-600">185 千卡</p>
-              <p class="text-sm text-gray-500">45 分钟</p>
             </div>
           </div>
           
-          <div class="grid grid-cols-3 mt-3 text-center">
-            <div>
-              <p class="text-sm text-gray-500">距离</p>
-              <p class="font-semibold">3.2 公里</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">平均配速</p>
-              <p class="font-semibold">14'03"</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">步数</p>
-              <p class="font-semibold">4,253 步</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- 记录项 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100 mb-3">
-          <div class="flex justify-between items-start">
+          <div class="p-3 bg-green-50 rounded-lg border border-green-100">
             <div class="flex">
-              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-3">
+              <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0 text-green-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold">瑜伽</h4>
-                <p class="text-sm text-gray-500">昨天 19:00 - 20:00</p>
+                <p class="text-sm font-medium text-green-800 mb-1">下周运动计划</p>
+                <p class="text-xs text-green-600">建议下周增加1-2次力量训练，帮助提高基础代谢率，加速脂肪燃烧。可以尝试简单的徒手训练，如俯卧撑、深蹲等。</p>
               </div>
             </div>
-            <div class="text-right">
-              <p class="font-semibold text-green-600">220 千卡</p>
-              <p class="text-sm text-gray-500">60 分钟</p>
-            </div>
-          </div>
-          
-          <div class="mt-3">
-            <p class="text-sm text-gray-500">注记</p>
-            <p class="text-sm">完成了全套流瑜伽，感觉身体柔韧性有所提高</p>
           </div>
         </div>
         
-        <!-- 记录项 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100 mb-3">
-          <div class="flex justify-between items-start">
-            <div class="flex">
-              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">
+        <!-- 运动成就 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-base font-semibold">运动成就</h2>
+            <a href="achievements.html" class="text-sm text-indigo-600 font-medium">查看全部</a>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-yellow-50 p-3 rounded-lg text-center border border-yellow-100">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
               </div>
-              <div>
-                <h4 class="font-semibold">游泳</h4>
-                <p class="text-sm text-gray-500">前天 16:30 - 17:30</p>
+              <p class="text-sm font-medium">持续一周</p>
+              <p class="text-xs text-gray-500">每日达标</p>
+            </div>
+            
+            <div class="bg-purple-50 p-3 rounded-lg text-center border border-purple-100">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
               </div>
+              <p class="text-sm font-medium">100公里</p>
+              <p class="text-xs text-gray-500">累计距离</p>
             </div>
-            <div class="text-right">
-              <p class="font-semibold text-blue-600">350 千卡</p>
-              <p class="text-sm text-gray-500">60 分钟</p>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-2 mt-3 text-center">
-            <div>
-              <p class="text-sm text-gray-500">距离</p>
-              <p class="font-semibold">1.5 公里</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">泳姿</p>
-              <p class="font-semibold">自由泳</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 运动计划推荐 -->
-      <div class="px-4 mb-10">
-        <h3 class="text-lg font-semibold mb-3">运动计划推荐</h3>
-        
-        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-sm p-4 text-white relative overflow-hidden mb-4">
-          <div class="absolute right-0 bottom-0 opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          
-          <h4 class="font-semibold mb-1">30天减脂挑战</h4>
-          <p class="text-sm opacity-90 mb-3">基于您的体重目标定制的30天计划，每日30分钟</p>
-          
-          <div class="flex items-center mb-2">
-            <div class="flex-1 h-1 bg-white/30 rounded-full mr-2 overflow-hidden">
-              <div class="h-full bg-white rounded-full" style="width: 40%"></div>
-            </div>
-            <span class="text-sm">40%</span>
-          </div>
-          
-          <button class="mt-1 bg-white text-indigo-600 font-medium px-4 py-2 rounded-full text-sm inline-flex items-center">
-            继续计划
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-            <div class="aspect-w-4 aspect-h-3 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="p-3">
-              <h4 class="font-semibold text-sm">居家力量训练</h4>
-              <p class="text-xs text-gray-500">20分钟 · 初级</p>
-            </div>
-          </div>
-          
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-            <div class="aspect-w-4 aspect-h-3 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="p-3">
-              <h4 class="font-semibold text-sm">拉伸放松</h4>
-              <p class="text-xs text-gray-500">15分钟 · 初级</p>
+            
+            <div class="bg-blue-50 p-3 rounded-lg text-center border border-blue-100">
+              <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <p class="text-sm font-medium">超越85%</p>
+              <p class="text-xs text-gray-500">用户活跃度</p>
             </div>
           </div>
         </div>
@@ -242,57 +217,61 @@
   <script src="js/navigation.js"></script>
   
   <script>
-    // 活动趋势图表
-    const ctx = document.getElementById('activityChart').getContext('2d');
-    const activityChart = new Chart(ctx, {
+    // 周运动图表
+    const exerciseCtx = document.getElementById('exerciseChart').getContext('2d');
+    const exerciseChart = new Chart(exerciseCtx, {
       type: 'bar',
       data: {
-        labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-        datasets: [{
-          label: '步数',
-          data: [5420, 7800, 3500, 6200, 5100, 8600, 2456],
-          backgroundColor: 'rgba(99, 102, 241, 0.7)',
-          borderWidth: 0,
-          borderRadius: 4
-        }]
+        labels: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+        datasets: [
+          {
+            label: '步数 (千步)',
+            data: [8.5, 9.2, 7.8, 7.8, 0, 0, 0],
+            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+            borderColor: 'rgba(59, 130, 246, 1)',
+            borderWidth: 1,
+            yAxisID: 'y'
+          },
+          {
+            label: '热量消耗 (千卡)',
+            data: [410, 460, 380, 320, 0, 0, 0],
+            backgroundColor: 'rgba(16, 185, 129, 0.6)',
+            borderColor: 'rgba(16, 185, 129, 1)',
+            borderWidth: 1,
+            yAxisID: 'y1'
+          }
+        ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            titleColor: '#334155',
-            bodyColor: '#334155',
-            borderColor: '#e2e8f0',
-            borderWidth: 1,
-            padding: 10,
-            displayColors: false,
-            callbacks: {
-              label: function(context) {
-                return `步数: ${context.raw} 步`;
-              }
-            }
-          }
-        },
+        maintainAspectRatio: true,
         scales: {
-          x: {
+          y: {
+            beginAtZero: true,
+            position: 'left',
+            title: {
+              display: true,
+              text: '步数 (千步)'
+            },
             grid: {
               display: false
             }
           },
-          y: {
+          y1: {
             beginAtZero: true,
-            grid: {
-              color: 'rgba(226, 232, 240, 0.5)'
+            position: 'right',
+            title: {
+              display: true,
+              text: '热量消耗 (千卡)'
             },
-            ticks: {
-              max: 10000,
-              stepSize: 2000
+            grid: {
+              display: false
             }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom'
           }
         }
       }

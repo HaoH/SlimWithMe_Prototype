@@ -10,12 +10,12 @@ function createNavigation() {
   nav.style.zIndex = "999";
   nav.style.transition = "transform 0.3s ease";
   
-  // 导航项配置
+  // 导航项配置（新顺序：行动，AI教练，拍照，成就，我的）
   const navItems = [
-    { icon: '<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>', text: '首页', url: 'home.html' },
-    { icon: '<path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>', text: '饮食', url: 'diet.html' },
+    { icon: '<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>', text: '行动', url: 'home.html' },
+    { icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>', text: 'AI教练', url: 'ai-coach.html' },
     { icon: '<path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>', text: '拍照', url: 'camera.html', special: true },
-    { icon: '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>', text: '运动', url: 'exercise.html' },
+    { icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>', text: '成就', url: 'achievements.html' },
     { icon: '<path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>', text: '我的', url: 'profile.html' }
   ];
   
@@ -90,4 +90,104 @@ window.showNavigation = function() {
   if (nav) {
     nav.style.transform = 'translateY(0)';
   }
-}; 
+};
+
+// 导航组件
+document.addEventListener('DOMContentLoaded', function() {
+  const navigationContainer = document.getElementById('navigation-container');
+  
+  if (navigationContainer) {
+    // 获取当前页面路径
+    const currentPath = window.location.pathname;
+    const pageName = currentPath.split('/').pop();
+    
+    // 导航项配置
+    const navItems = [
+      {
+        id: 'home',
+        name: '行动',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-14 0l2 2m12-4v10a2 2 0 01-2 2H6a2 2 0 01-2-2V10a2 2 0 012-2h2"></path></svg>',
+        link: 'home.html'
+      },
+      {
+        id: 'diet',
+        name: '饮食',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>',
+        link: 'diet.html'
+      },
+      {
+        id: 'camera',
+        name: '拍照',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>',
+        link: 'camera.html'
+      },
+      {
+        id: 'exercise',
+        name: '运动',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>',
+        link: 'exercise.html'
+      },
+      {
+        id: 'profile',
+        name: '我的',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>',
+        link: 'profile.html'
+      }
+    ];
+    
+    // 创建导航HTML
+    let navigationHTML = `
+      <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-bottom max-w-md mx-auto z-50">
+        <div class="grid grid-cols-5 h-16">
+    `;
+    
+    // 添加导航项
+    navItems.forEach(item => {
+      const isActive = (pageName === item.link || 
+                      (pageName === '' && item.id === 'home') || 
+                      (pageName === 'index.html' && item.id === 'home'));
+      
+      navigationHTML += `
+        <a href="${item.link}" class="flex flex-col items-center justify-center ${isActive ? 'text-indigo-600' : 'text-gray-500'}">
+          <div class="w-6 h-6">
+            ${item.icon}
+          </div>
+          <span class="text-xs mt-1">${item.name}</span>
+        </a>
+      `;
+    });
+    
+    navigationHTML += `
+        </div>
+      </nav>
+    `;
+    
+    // 注入导航HTML
+    navigationContainer.innerHTML = navigationHTML;
+    
+    // 特殊页面处理
+    const specialPages = ['camera.html', 'food-analysis.html'];
+    if (specialPages.includes(pageName)) {
+      // 通知父页面隐藏底部导航
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ action: 'hideNavigation' }, '*');
+      }
+      
+      // 当前页面也隐藏导航
+      navigationContainer.style.display = 'none';
+    }
+  }
+  
+  // 监听消息以隐藏/显示导航栏
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.action === 'hideNavigation') {
+      if (navigationContainer) {
+        navigationContainer.style.display = 'none';
+      }
+    } else if (event.data && event.data.action === 'showNavigation') {
+      if (navigationContainer) {
+        navigationContainer.style.display = 'block';
+      }
+    }
+  });
+}); 

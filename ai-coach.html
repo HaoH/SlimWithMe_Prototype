@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻卡伴侣 - AI教练</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chat-container {
+      background-image: url('https://images.unsplash.com/photo-1590439471364-192aa70c0b53?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .chat-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(3px);
+    }
+    
+    .message-bubble {
+      max-width: 80%;
+      border-radius: 18px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      position: relative;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    .message-bubble.ai {
+      border-top-left-radius: 4px;
+      align-self: flex-start;
+      background-color: #f3f4f6;
+    }
+    
+    .message-bubble.user {
+      border-top-right-radius: 4px;
+      align-self: flex-end;
+      background-color: #4f46e5;
+      color: white;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .typing-indicator {
+      display: inline-block;
+      width: 40px;
+      text-align: center;
+    }
+    
+    .typing-indicator span {
+      height: 5px;
+      width: 5px;
+      background-color: #606060;
+      display: inline-block;
+      border-radius: 50%;
+      animation: typing 1.5s infinite ease-in-out;
+      margin: 0 1px;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+    
+    @keyframes typing {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <div id="app" class="h-screen flex flex-col max-w-md mx-auto overflow-hidden relative bg-white">
+    <!-- 顶部安全区域 - 适配刘海屏 -->
+    <div class="safe-area-top bg-white"></div>
+    
+    <!-- 聊天头部 -->
+    <header class="px-4 py-3 bg-white border-b border-gray-200 flex items-center z-10">
+      <button id="backButton" class="h-10 w-10 rounded-full flex items-center justify-center mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <div class="flex-1">
+        <h1 class="text-lg font-semibold">健身教练 小美</h1>
+        <p class="text-xs text-gray-500">AI助手，专业营养与健身指导</p>
+      </div>
+      <div class="relative">
+        <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-indigo-500">
+          <img src="https://images.unsplash.com/photo-1574678720375-d5cc9a9ede9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="AI Coach" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+      </div>
+    </header>
+    
+    <!-- 聊天内容区域 -->
+    <main class="flex-1 overflow-y-auto relative chat-container" id="chatContainer">
+      <div class="p-4 flex flex-col relative z-10">
+        <!-- 欢迎消息 -->
+        <div class="message-bubble ai">
+          <p>你好！我是你的AI健身教练小美，我会根据你的身体状况和减重目标，为你提供专业的饮食和运动建议。有什么可以帮助你的吗？</p>
+        </div>
+        
+        <!-- 系统提示 -->
+        <div class="text-center text-xs text-gray-500 my-3">今天 10:30</div>
+        
+        <!-- AI消息 -->
+        <div class="message-bubble ai">
+          <p>根据你最近的饮食记录，我注意到你的碳水摄入略高于推荐值。你可以考虑减少主食的摄入量，比如晚餐可以用蔬菜代替部分米饭。</p>
+        </div>
+        
+        <!-- 用户消息 -->
+        <div class="message-bubble user">
+          <p>好的，明白了。我最近总是控制不住想吃甜食，有什么好的替代方案吗？</p>
+        </div>
+        
+        <!-- AI消息 -->
+        <div class="message-bubble ai">
+          <p>对于甜食的渴望，你可以尝试以下几种低卡健康替代品：</p>
+          <ol class="list-decimal pl-5 mt-1">
+            <li>新鲜水果，特别是草莓和蓝莓</li>
+            <li>希腊酸奶配少量蜂蜜</li>
+            <li>少量黑巧克力（70%以上可可含量）</li>
+            <li>自制烤苹果，撒少量肉桂粉</li>
+          </ol>
+          <p class="mt-1">这些选择可以满足你对甜食的渴望，同时控制卡路里摄入。</p>
+        </div>
+        
+        <!-- 用户消息 -->
+        <div class="message-bubble user">
+          <p>谢谢建议！对了，我想知道我今天还可以吃多少卡路里？</p>
+        </div>
+        
+        <!-- AI消息带数据分析 -->
+        <div class="message-bubble ai">
+          <p>根据你今天的记录，情况如下：</p>
+          <div class="bg-white rounded-lg p-3 mt-2 mb-1">
+            <div class="flex justify-between items-center mb-2">
+              <p class="text-sm font-medium">已摄入</p>
+              <p class="text-sm font-semibold">1,250 千卡</p>
+            </div>
+            <div class="flex justify-between items-center mb-2">
+              <p class="text-sm font-medium">今日目标</p>
+              <p class="text-sm font-semibold">1,800 千卡</p>
+            </div>
+            <div class="flex justify-between items-center">
+              <p class="text-sm font-medium text-green-600">还可摄入</p>
+              <p class="text-sm font-semibold text-green-600">550 千卡</p>
+            </div>
+          </div>
+          <p>晚餐可以考虑一份蛋白质（如鸡胸肉或豆腐），配合大量蔬菜和少量主食。</p>
+        </div>
+        
+        <!-- 正在输入提示 -->
+        <div class="message-bubble ai" style="padding: 12px 14px;">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <!-- 快捷功能栏 -->
+    <div class="bg-gray-50 px-4 py-2 border-t border-gray-200">
+      <div class="flex space-x-2 overflow-x-auto pb-2 no-scrollbar">
+        <button class="flex-shrink-0 bg-white border border-gray-200 rounded-full px-4 py-1.5 text-sm flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          分享饮食记录
+        </button>
+        <button class="flex-shrink-0 bg-white border border-gray-200 rounded-full px-4 py-1.5 text-sm flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          分享运动记录
+        </button>
+        <button class="flex-shrink-0 bg-white border border-gray-200 rounded-full px-4 py-1.5 text-sm flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          分享体重记录
+        </button>
+        <button class="flex-shrink-0 bg-white border border-gray-200 rounded-full px-4 py-1.5 text-sm flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          查看饮食建议
+        </button>
+      </div>
+    </div>
+    
+    <!-- 聊天输入区域 -->
+    <div class="bg-white px-4 py-3 border-t border-gray-200 flex items-center">
+      <button class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+        </svg>
+      </button>
+      <div class="flex-1 bg-gray-100 rounded-full px-4 py-2 mr-2 flex items-center">
+        <input type="text" placeholder="发送消息..." class="bg-transparent w-full focus:outline-none text-sm">
+        <button class="h-8 w-8 rounded-full flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+      </div>
+      <button class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      </button>
+      <button class="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    // 页面加载时隐藏导航栏（如果有父窗口）
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.parent && window.parent.hideNavigation) {
+        window.parent.hideNavigation();
+      }
+    });
+    
+    // 返回按钮点击事件处理
+    document.getElementById('backButton').addEventListener('click', function() {
+      if (window.parent && window.parent.showNavigation) {
+        window.parent.showNavigation();
+      }
+      window.location.href = 'home.html';
+    });
+    
+    // 页面滚动到底部
+    function scrollToBottom() {
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // 页面加载后滚动到底部
+    window.onload = scrollToBottom;
+  </script>
+</body>
+</html> 

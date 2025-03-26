@@ -3,10 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>轻卡伴侣 - 首页</title>
+  <title>轻卡伴侣 - 行动</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* 日历覆盖层 */
+    .calendar-overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      background-color: white;
+      z-index: 1000;
+      transition: height 0.3s ease-in-out;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .calendar-overlay.open {
+      height: 70vh;
+    }
+    
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      position: relative;
+    }
+    
+    .calendar-day.today {
+      background-color: rgba(79, 70, 229, 0.1);
+      font-weight: 600;
+    }
+    
+    .calendar-day.completed {
+      color: white;
+    }
+    
+    .calendar-day.completed::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #10B981;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    
+    .calendar-day.partial::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #F59E0B;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    
+    .calendar-day.empty {
+      opacity: 0.3;
+    }
+    
+    .meal-progress {
+      position: relative;
+    }
+    
+    .meal-progress .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #10B981;
+      color: white;
+      border-radius: 9999px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    
+    .progress-circle {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      overflow: hidden;
+    }
+    
+    .progress-circle::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      background: white;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    
+    .progress-circle-value {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      z-index: 3;
+    }
+    
+    .progress-circle .fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-origin: center;
+      transform: rotate(0deg);
+      z-index: 1;
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
   <div id="app" class="h-screen flex flex-col max-w-md mx-auto overflow-hidden relative bg-white">
@@ -18,227 +152,396 @@
       <!-- 首页内容 -->
       <div class="p-4">
         <!-- 欢迎区域 -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-4">
           <div>
-            <h1 class="text-xl font-bold">你好，小轻👋</h1>
-            <p class="text-gray-600 text-sm">今天也要保持健康的生活哦~</p>
+            <h1 class="text-xl font-bold">你好，小轻</h1>
+            <p class="text-sm text-gray-500">今天是持续减重的第28天</p>
           </div>
-          <button class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-          </button>
-        </div>
-        
-        <!-- 健康数据卡片 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 mb-5 border border-gray-100">
-          <h2 class="text-lg font-semibold mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            健康数据
-          </h2>
-          
-          <div class="grid grid-cols-3 gap-4 mb-4">
-            <div class="flex flex-col items-center">
-              <p class="text-sm text-gray-500 mb-1">体重</p>
-              <p class="font-bold text-xl">65.5<span class="text-sm font-normal ml-1">kg</span></p>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="text-sm text-gray-500 mb-1">BMI</p>
-              <p class="font-bold text-xl">23.8</p>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="text-sm text-gray-500 mb-1">体脂率</p>
-              <p class="font-bold text-xl">22%</p>
-            </div>
-          </div>
-          
-          <div class="bg-gray-50 rounded-lg p-3">
-            <div class="flex justify-between items-center mb-2">
-              <p class="text-sm font-medium">距离目标体重</p>
-              <p class="text-sm font-semibold text-indigo-600">5.5 kg</p>
-            </div>
-            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div class="bg-indigo-600 h-full rounded-full" style="width: 45%"></div>
-            </div>
+          <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-indigo-100">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="User Avatar" class="w-full h-full object-cover">
           </div>
         </div>
         
-        <!-- 体重趋势图表 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 mb-5 border border-gray-100">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+        <!-- 周历视图 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-base font-semibold">本周进度</h2>
+            <button id="calendarBtn" class="text-sm text-indigo-600 font-medium flex items-center">
+              完整日历
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-              体重趋势
-            </h2>
-            <select class="text-sm bg-gray-100 rounded px-2 py-1 border-none">
-              <option>近7天</option>
-              <option>近30天</option>
-              <option>近3个月</option>
-            </select>
+            </button>
           </div>
           
-          <div class="h-48">
-            <canvas id="weightChart"></canvas>
+          <div class="flex justify-between mb-1">
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">一</p>
+              <div class="progress-circle mx-auto">
+                <div class="fill bg-green-500" style="clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 50%);"></div>
+                <div class="progress-circle-value">87%</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">26</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">二</p>
+              <div class="progress-circle mx-auto">
+                <div class="fill bg-green-500" style="clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);"></div>
+                <div class="progress-circle-value">100%</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">27</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">三</p>
+              <div class="progress-circle mx-auto">
+                <div class="fill bg-orange-500" style="clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%);"></div>
+                <div class="progress-circle-value">45%</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">28</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">四</p>
+              <div class="progress-circle mx-auto">
+                <div class="fill bg-green-500" style="clip-path: polygon(50% 0%, 100% 0%, 100% 75%, 50% 75%, 50% 50%);"></div>
+                <div class="progress-circle-value text-indigo-600">今天</div>
+              </div>
+              <p class="text-xs mt-1 font-medium text-indigo-600">29</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">五</p>
+              <div class="progress-circle mx-auto">
+                <div class="progress-circle-value text-gray-400">未开始</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">30</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">六</p>
+              <div class="progress-circle mx-auto">
+                <div class="progress-circle-value text-gray-400">未开始</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">31</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 mb-2">日</p>
+              <div class="progress-circle mx-auto">
+                <div class="progress-circle-value text-gray-400">未开始</div>
+              </div>
+              <p class="text-xs mt-1 font-medium">1</p>
+            </div>
+          </div>
+          
+          <div class="flex justify-between text-xs text-gray-500 mt-3">
+            <div class="flex items-center">
+              <div class="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+              <span>已完成</span>
+            </div>
+            <div class="flex items-center">
+              <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+              <span>部分完成</span>
+            </div>
+            <div class="flex items-center">
+              <div class="w-3 h-3 rounded-full bg-gray-200 mr-1"></div>
+              <span>未开始</span>
+            </div>
           </div>
         </div>
         
-        <!-- 今日摄入 -->
-        <div class="bg-white rounded-lg shadow-sm p-4 mb-5 border border-gray-100">
-          <h2 class="text-lg font-semibold mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            今日营养摄入
-          </h2>
+        <!-- 今日热量计划 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <h2 class="text-base font-semibold mb-3">今日热量计划</h2>
           
-          <div class="grid grid-cols-2 gap-4">
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="flex justify-between items-center mb-2">
-                <p class="text-sm font-medium">热量</p>
-                <p class="text-sm font-semibold"><span class="text-orange-500">1250</span> / 1800 千卡</p>
+          <div class="bg-gray-50 rounded-lg p-3 mb-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm font-medium">今日热量限额</p>
+                <p class="text-xs text-gray-500">周四热量限额相对较低</p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold text-indigo-600">1,800<span class="text-sm font-normal"> 千卡</span></p>
+                <p class="text-xs text-gray-500">剩余: <span class="font-medium text-green-600">550 千卡</span></p>
+              </div>
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full overflow-hidden mt-2">
+              <div class="bg-indigo-600 h-full rounded-full" style="width: 69%"></div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-3">
+            <!-- 早餐 -->
+            <div class="meal-progress bg-blue-50 rounded-lg p-3 text-center relative">
+              <span class="badge">+30</span>
+              <p class="text-sm font-medium text-blue-600">早餐</p>
+              <p class="text-lg font-bold">450<span class="text-xs font-normal"> 千卡</span></p>
+              <p class="text-xs text-gray-500">计划: 420 千卡</p>
+            </div>
+            
+            <!-- 午餐 -->
+            <div class="meal-progress bg-green-50 rounded-lg p-3 text-center">
+              <p class="text-sm font-medium text-green-600">午餐</p>
+              <p class="text-lg font-bold">580<span class="text-xs font-normal"> 千卡</span></p>
+              <p class="text-xs text-gray-500">计划: 600 千卡</p>
+            </div>
+            
+            <!-- 晚餐 -->
+            <div class="meal-progress bg-orange-50 rounded-lg p-3 text-center">
+              <p class="text-sm font-medium text-orange-600">晚餐</p>
+              <p class="text-lg font-bold">220<span class="text-xs font-normal"> 千卡</span></p>
+              <p class="text-xs text-gray-500">计划: 300 千卡</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 今日运动计划 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <h2 class="text-base font-semibold mb-3">今日运动计划</h2>
+          
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-blue-50 rounded-lg p-3 text-center">
+              <p class="text-xs text-gray-500 mb-1">目标步数</p>
+              <p class="text-xl font-bold text-blue-600">10,000</p>
+              <p class="text-xs text-gray-500">已完成 7,825</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3 text-center">
+              <p class="text-xs text-gray-500 mb-1">热量消耗</p>
+              <p class="text-xl font-bold text-green-600">320<span class="text-sm font-normal"> 千卡</span></p>
+              <p class="text-xs text-gray-500">目标 500 千卡</p>
+            </div>
+            <div class="bg-purple-50 rounded-lg p-3 text-center">
+              <p class="text-xs text-gray-500 mb-1">累计距离</p>
+              <p class="text-xl font-bold text-purple-600">5.3<span class="text-sm font-normal"> km</span></p>
+              <p class="text-xs text-gray-500">目标 8.0 km</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 今日营养摄入 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-base font-semibold">今日营养摄入</h2>
+            <a href="diet.html" class="text-sm text-indigo-600 font-medium">详细信息</a>
+          </div>
+          
+          <div class="space-y-3">
+            <!-- 蛋白质 -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <p class="text-sm">蛋白质</p>
+                <p class="text-sm font-medium">48g / 60g</p>
               </div>
               <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="bg-orange-500 h-full rounded-full" style="width: 70%"></div>
+                <div class="bg-blue-500 h-full rounded-full" style="width: 80%"></div>
               </div>
             </div>
             
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="flex justify-between items-center mb-2">
-                <p class="text-sm font-medium">蛋白质</p>
-                <p class="text-sm font-semibold"><span class="text-purple-500">45</span> / 75 克</p>
+            <!-- 碳水化合物 -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <p class="text-sm">碳水化合物</p>
+                <p class="text-sm font-medium">156g / 180g</p>
               </div>
               <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="bg-purple-500 h-full rounded-full" style="width: 60%"></div>
+                <div class="bg-yellow-500 h-full rounded-full" style="width: 86%"></div>
               </div>
             </div>
             
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="flex justify-between items-center mb-2">
-                <p class="text-sm font-medium">碳水</p>
-                <p class="text-sm font-semibold"><span class="text-blue-500">120</span> / 200 克</p>
+            <!-- 脂肪 -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <p class="text-sm">脂肪</p>
+                <p class="text-sm font-medium">38g / 60g</p>
               </div>
               <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="bg-blue-500 h-full rounded-full" style="width: 60%"></div>
-              </div>
-            </div>
-            
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="flex justify-between items-center mb-2">
-                <p class="text-sm font-medium">脂肪</p>
-                <p class="text-sm font-semibold"><span class="text-green-500">30</span> / 60 克</p>
-              </div>
-              <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="bg-green-500 h-full rounded-full" style="width: 50%"></div>
+                <div class="bg-red-500 h-full rounded-full" style="width: 63%"></div>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- AI助手 -->
-        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-sm p-4 mb-5 text-white relative overflow-hidden">
-          <div class="absolute right-0 top-0 opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+        <!-- 今日运动记录 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-100">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-base font-semibold">今日运动记录</h2>
+            <a href="exercise.html" class="text-sm text-indigo-600 font-medium">详细信息</a>
           </div>
           
-          <h2 class="text-lg font-semibold mb-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            AI智能建议
-          </h2>
-          
-          <p class="text-sm opacity-90 mb-3">根据您的饮食记录和运动情况，我们为您提供个性化建议：</p>
-          
-          <div class="bg-white/20 backdrop-blur-sm rounded-lg p-3 mb-3">
-            <p class="text-sm">您今天的蛋白质摄入略低，建议晚餐增加适量瘦肉或豆制品</p>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
+              <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium">步行</p>
+                  <p class="text-xs text-gray-500">08:30 - 09:15</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-blue-600">180 千卡</p>
+                <p class="text-xs text-gray-500">3.2 公里</p>
+              </div>
+            </div>
+            
+            <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
+              <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium">骑行</p>
+                  <p class="text-xs text-gray-500">18:00 - 18:25</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-green-600">140 千卡</p>
+                <p class="text-xs text-gray-500">4.5 公里</p>
+              </div>
+            </div>
           </div>
-          
-          <div class="bg-white/20 backdrop-blur-sm rounded-lg p-3">
-            <p class="text-sm">检测到您已3天未进行有氧运动，建议安排30分钟步行</p>
-          </div>
-          
-          <button class="mt-3 bg-white text-indigo-600 font-medium px-4 py-2 rounded-full text-sm inline-flex items-center">
-            查看更多建议
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
         </div>
       </div>
     </main>
     
     <!-- 导航容器 -->
     <div id="navigation-container"></div>
+    
+    <!-- 完整日历弹出层 -->
+    <div id="calendarOverlay" class="calendar-overlay">
+      <div class="p-4 h-full overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">2023年6月</h2>
+          <button id="closeCalendarBtn" class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="flex justify-between items-center mb-2">
+          <button class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <div class="flex space-x-1">
+            <div class="h-2 w-2 rounded-full bg-gray-300"></div>
+            <div class="h-2 w-2 rounded-full bg-gray-500"></div>
+            <div class="h-2 w-2 rounded-full bg-gray-300"></div>
+          </div>
+          <button class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-7 gap-2 text-center mb-2">
+          <div class="text-sm font-medium text-gray-500">一</div>
+          <div class="text-sm font-medium text-gray-500">二</div>
+          <div class="text-sm font-medium text-gray-500">三</div>
+          <div class="text-sm font-medium text-gray-500">四</div>
+          <div class="text-sm font-medium text-gray-500">五</div>
+          <div class="text-sm font-medium text-gray-500">六</div>
+          <div class="text-sm font-medium text-gray-500">日</div>
+        </div>
+        
+        <div class="calendar-grid">
+          <!-- 前一个月的日期 -->
+          <div class="calendar-day empty">29</div>
+          <div class="calendar-day empty">30</div>
+          <div class="calendar-day empty">31</div>
+          
+          <!-- 当前月的日期 -->
+          <div class="calendar-day">1</div>
+          <div class="calendar-day">2</div>
+          <div class="calendar-day">3</div>
+          <div class="calendar-day">4</div>
+          <div class="calendar-day completed">5</div>
+          <div class="calendar-day completed">6</div>
+          <div class="calendar-day completed">7</div>
+          <div class="calendar-day completed">8</div>
+          <div class="calendar-day completed">9</div>
+          <div class="calendar-day completed">10</div>
+          <div class="calendar-day completed">11</div>
+          <div class="calendar-day completed">12</div>
+          <div class="calendar-day completed">13</div>
+          <div class="calendar-day completed">14</div>
+          <div class="calendar-day completed">15</div>
+          <div class="calendar-day completed">16</div>
+          <div class="calendar-day completed">17</div>
+          <div class="calendar-day completed">18</div>
+          <div class="calendar-day completed">19</div>
+          <div class="calendar-day completed">20</div>
+          <div class="calendar-day completed">21</div>
+          <div class="calendar-day completed">22</div>
+          <div class="calendar-day completed">23</div>
+          <div class="calendar-day completed">24</div>
+          <div class="calendar-day completed">25</div>
+          <div class="calendar-day completed">26</div>
+          <div class="calendar-day completed">27</div>
+          <div class="calendar-day partial">28</div>
+          <div class="calendar-day today">29</div>
+          <div class="calendar-day">30</div>
+          
+          <!-- 下一个月的日期 -->
+          <div class="calendar-day empty">1</div>
+          <div class="calendar-day empty">2</div>
+        </div>
+        
+        <div class="flex justify-between text-xs text-gray-500 mt-4">
+          <div class="flex items-center">
+            <div class="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+            <span>已完成</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+            <span>部分完成</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-3 h-3 rounded-full bg-indigo-200 mr-1"></div>
+            <span>今天</span>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <h3 class="text-base font-semibold mb-2">本月数据</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-3">
+              <p class="text-sm text-gray-500 mb-1">月度完成率</p>
+              <p class="text-2xl font-bold text-indigo-600">92%</p>
+              <p class="text-xs text-gray-500">总共完成28天</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-3">
+              <p class="text-sm text-gray-500 mb-1">当月减重</p>
+              <p class="text-2xl font-bold text-green-600">2.8 kg</p>
+              <p class="text-xs text-gray-500">比上月提高了12%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <!-- 引入导航组件 -->
   <script src="js/navigation.js"></script>
   
   <script>
-    // 体重趋势图表
-    const ctx = document.getElementById('weightChart').getContext('2d');
-    const weightChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['6/1', '6/2', '6/3', '6/4', '6/5', '6/6', '6/7'],
-        datasets: [{
-          label: '体重(kg)',
-          data: [67.2, 66.8, 66.5, 66.1, 65.9, 65.7, 65.5],
-          borderColor: 'rgba(79, 70, 229, 0.8)',
-          backgroundColor: 'rgba(79, 70, 229, 0.1)',
-          borderWidth: 2,
-          pointBackgroundColor: 'rgba(79, 70, 229, 1)',
-          pointRadius: 3,
-          tension: 0.2,
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            titleColor: '#334155',
-            bodyColor: '#334155',
-            borderColor: '#e2e8f0',
-            borderWidth: 1,
-            padding: 10,
-            displayColors: false,
-            callbacks: {
-              label: function(context) {
-                return `体重: ${context.raw} kg`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false
-            }
-          },
-          y: {
-            grid: {
-              color: 'rgba(226, 232, 240, 0.5)'
-            },
-            min: 64,
-            max: 68,
-            ticks: {
-              stepSize: 1
-            }
-          }
-        }
-      }
+    // 日历弹出层控制
+    const calendarBtn = document.getElementById('calendarBtn');
+    const calendarOverlay = document.getElementById('calendarOverlay');
+    const closeCalendarBtn = document.getElementById('closeCalendarBtn');
+    
+    calendarBtn.addEventListener('click', function() {
+      calendarOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeCalendarBtn.addEventListener('click', function() {
+      calendarOverlay.classList.remove('open');
+      document.body.style.overflow = 'auto';
     });
   </script>
 </body>
