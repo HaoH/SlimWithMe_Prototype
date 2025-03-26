@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻卡伴侣 - 原型预览</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f7;
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .phone-container {
+      display: inline-block;
+      margin: 1rem;
+      position: relative;
+    }
+    
+    .phone-frame {
+      position: relative;
+      width: 400px;
+      height: 844px;
+      background-color: #1a1a1a;
+      border-radius: 55px;
+      padding: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+    
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 45px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .phone-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding-top: 47px;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .phone-title {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #333;
+      font-size: 1.25rem;
+    }
+    
+    .phone-notch-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 47px;
+      z-index: 100;
+      pointer-events: none;
+      background-color: white;
+      border-top-left-radius: 45px;
+      border-top-right-radius: 45px;
+    }
+    
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 35px;
+      background-color: #1a1a1a;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      z-index: 101;
+    }
+    
+    .phone-speaker {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 6px;
+      background-color: #383838;
+      border-radius: 3px;
+      z-index: 102;
+    }
+    
+    /* 移除多余的摄像头和传感器元素，改为使用伪元素 */
+    .phone-notch::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      background-color: #383838;
+      border-radius: 50%;
+      z-index: 102;
+    }
+
+    /* 状态栏图标改进 */
+    .phone-status-bar {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 102;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      color: black;
+    }
+
+    .status-time {
+      margin-right: 6px;
+    }
+    
+    .status-battery {
+      display: flex;
+      align-items: center;
+      margin-left: 6px;
+    }
+    
+    .battery-icon {
+      width: 22px;
+      height: 10px;
+      border: 1px solid black;
+      border-radius: 2px;
+      padding: 1px;
+      position: relative;
+    }
+    
+    .battery-icon:after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: -3px;
+      width: 2px;
+      height: 4px;
+      background-color: black;
+      border-radius: 0 2px 2px 0;
+    }
+    
+    .battery-level {
+      height: 100%;
+      width: 70%;
+      background-color: black;
+      border-radius: 1px;
+    }
+    
+    .network-icon {
+      display: inline-block;
+      height: 10px;
+      margin-right: 6px;
+      position: relative;
+      width: 16px;
+    }
+    
+    .network-bar {
+      position: absolute;
+      bottom: 0;
+      width: 3px;
+      background-color: black;
+      border-radius: 1px;
+    }
+    
+    .network-bar:nth-child(1) {
+      height: 4px;
+      left: 0;
+    }
+    
+    .network-bar:nth-child(2) {
+      height: 6px;
+      left: 4px;
+    }
+    
+    .network-bar:nth-child(3) {
+      height: 8px;
+      left: 8px;
+    }
+    
+    .network-bar:nth-child(4) {
+      height: 10px;
+      left: 12px;
+    }
+    
+    .wifi-icon {
+      margin-right: 6px;
+      position: relative;
+      width: 15px;
+      height: 12px;
+    }
+    
+    .wifi-arc {
+      position: absolute;
+      border: 1.5px solid black;
+      border-bottom: none;
+      border-radius: 7px 7px 0 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .wifi-arc:nth-child(1) {
+      width: 15px;
+      height: 8px;
+      bottom: 1px;
+    }
+    
+    .wifi-arc:nth-child(2) {
+      width: 10px;
+      height: 5px;
+      bottom: 4px;
+    }
+    
+    .wifi-arc:nth-child(3) {
+      width: 2px;
+      height: 2px;
+      bottom: 0;
+      border: none;
+      border-radius: 50%;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">轻卡伴侣 App 原型预览</h1>
+      <p class="text-gray-600">吃你想吃的，减你该减的</p>
+    </div>
+    
+    <div class="flex flex-wrap justify-center">
+      <!-- 首页框架 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="index.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">首页框架</h2>
+      </div>
+      
+      <!-- 首页内容 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="home.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">首页内容</h2>
+      </div>
+      
+      <!-- 饮食管理 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="diet.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">饮食管理</h2>
+      </div>
+      
+      <!-- 拍照识别 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="camera.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">拍照识别</h2>
+      </div>
+      
+      <!-- 运动促进 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="exercise.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">运动促进</h2>
+      </div>
+      
+      <!-- 个人中心 -->
+      <div class="phone-container">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch-container">
+              <div class="phone-notch"></div>
+              <div class="phone-speaker"></div>
+              <div class="phone-status-bar">
+                <div class="network-icon">
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                  <div class="network-bar"></div>
+                </div>
+                <div class="wifi-icon">
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                  <div class="wifi-arc"></div>
+                </div>
+                <div class="status-battery">
+                  <div class="battery-icon">
+                    <div class="battery-level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <iframe class="phone-iframe" src="profile.html" scrolling="yes"></iframe>
+          </div>
+        </div>
+        <h2 class="phone-title">个人中心</h2>
+      </div>
+    </div>
+    
+    <div class="text-center text-gray-600 text-sm mt-12 mb-4">
+      <p>本原型针对 iPhone 15 Pro 尺寸进行优化设计</p>
+      <p class="mt-2">© 2023 轻盈健康科技 - 轻卡伴侣团队</p>
+    </div>
+  </div>
+</body>
+</html> 
