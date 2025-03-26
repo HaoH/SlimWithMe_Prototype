@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - 拍照识别</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <style>
     body {
       font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -49,11 +50,9 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 60px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
+      padding: 15px;
       z-index: 10;
     }
     
@@ -343,13 +342,6 @@
     const mealTypeBtns = document.querySelectorAll('.meal-type-btn');
     const galleryBtn = document.getElementById('galleryBtn');
     
-    // 通知父页面隐藏底部导航
-    window.addEventListener('DOMContentLoaded', function() {
-      if (window.parent && window.parent.hideNavigation) {
-        window.parent.hideNavigation();
-      }
-    });
-    
     // 闪光灯选项切换
     flashBtn.addEventListener('click', function() {
       flashOptions.classList.toggle('show');
@@ -357,11 +349,7 @@
     
     // 点击关闭按钮
     closeBtn.addEventListener('click', function() {
-      // 通知父页面显示底部导航
-      if (window.parent && window.parent.showNavigation) {
-        window.parent.showNavigation();
-      }
-      window.location.href = 'index.html';
+      window.location.href = 'diet.html';
     });
     
     // 选择餐食类型

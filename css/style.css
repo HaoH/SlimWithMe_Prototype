@@ -1,3 +1,73 @@
+/* 轻卡伴侣应用通用样式 */
+
+/* 基础样式 */
+body {
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+}
+
+/* 刘海屏适配 */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
+  height: env(safe-area-inset-top, 0);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+/* 底部安全区域，用于导航条 */
+.nav-bar {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* 导航条样式 */
+.nav-item {
+  color: #718096;
+  transition: color 0.2s;
+}
+
+.nav-item.active {
+  color: #4F46E5;
+}
+
+/* 通用动画 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 修复iOS点击高亮 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* 基础样式设置 */
 :root {
   --primary-color: #4F46E5;
@@ -20,7 +90,6 @@
 
 /* 全局样式 */
 body {
-  font-family: "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
@@ -80,16 +149,6 @@ body {
 }
 
 /* 动画效果 */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
 .fade-in {
   animation: fadeIn 0.5s ease forwards;
 }

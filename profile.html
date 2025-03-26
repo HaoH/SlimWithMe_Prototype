@@ -3,250 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人资料 - 轻卡伴侣</title>
+  <title>轻卡伴侣 - 个人中心</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-50">
-  <!-- 顶部导航 -->
-  <header class="bg-white px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10">
-    <h1 class="text-lg font-medium">个人中心</h1>
-    <div>
-      <button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
-        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <div class="px-4 py-5">
-    <!-- 用户资料卡片 -->
-    <div class="card p-5 mb-5 slide-up">
-      <div class="flex items-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 mr-4 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
-          小王
-        </div>
-        <div class="flex-1">
-          <h2 class="text-lg font-medium">小王同学</h2>
-          <p class="text-sm text-gray-500 mb-2">减重第15天</p>
-          <div class="flex space-x-2">
-            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-600 rounded-full text-xs">连续打卡15天</span>
-            <span class="px-2 py-0.5 bg-green-100 text-green-600 rounded-full text-xs">周减重冠军</span>
-          </div>
-        </div>
-      </div>
-    </div>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <div id="app" class="h-screen flex flex-col max-w-md mx-auto overflow-hidden relative bg-white">
+    <!-- 顶部安全区域 - 适配刘海屏 -->
+    <div class="safe-area-top bg-white"></div>
     
-    <!-- 健康数据概览 -->
-    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.1s">
-      <h3 class="font-medium mb-4">健康数据</h3>
-      
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-gray-50 p-3 rounded-lg">
-          <p class="text-sm text-gray-500 mb-1">身高</p>
-          <p class="text-xl font-medium">175<span class="text-sm ml-1">cm</span></p>
-        </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-          <p class="text-sm text-gray-500 mb-1">当前体重</p>
-          <p class="text-xl font-medium">65.8<span class="text-sm ml-1">kg</span></p>
-        </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-          <p class="text-sm text-gray-500 mb-1">BMI指数</p>
-          <p class="text-xl font-medium">21.5</p>
-          <p class="text-xs text-green-600 mt-1">健康范围</p>
-        </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-          <p class="text-sm text-gray-500 mb-1">体脂率</p>
-          <p class="text-xl font-medium">19.8<span class="text-sm ml-1">%</span></p>
-          <p class="text-xs text-yellow-600 mt-1">偏高</p>
-        </div>
-      </div>
-      
-      <div class="mt-4">
-        <div class="flex justify-between items-center mb-1">
-          <p class="text-sm">减重目标</p>
-          <p class="text-sm font-medium">当前: <span class="text-indigo-600">65.8kg</span> / 目标: <span class="text-green-600">60.0kg</span></p>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-bar-fill" style="width: 55%"></div>
-        </div>
-        <p class="text-xs text-gray-500 mt-1 text-right">已完成 55%，还需减重 5.8kg</p>
-      </div>
-    </div>
-    
-    <!-- 健康目标设置 -->
-    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.2s">
-      <h3 class="font-medium mb-3">健康目标</h3>
-      
-      <div class="space-y-4">
-        <div>
-          <div class="flex justify-between items-center mb-1">
-            <p class="text-sm">每日热量目标</p>
-            <p class="text-sm font-medium text-indigo-600">1500 大卡/天</p>
-          </div>
-          <div class="h-1 bg-gray-200 rounded-full">
-            <div class="h-1 bg-indigo-600 rounded-full" style="width: 1500/2500*100%"></div>
-          </div>
-          <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>1200</span>
-            <span>1500</span>
-            <span>1800</span>
-          </div>
-        </div>
-        
-        <div>
-          <div class="flex justify-between items-center mb-1">
-            <p class="text-sm">每日步数目标</p>
-            <p class="text-sm font-medium text-indigo-600">8,000 步/天</p>
-          </div>
-          <div class="h-1 bg-gray-200 rounded-full">
-            <div class="h-1 bg-indigo-600 rounded-full" style="width: 8000/12000*100%"></div>
-          </div>
-          <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>6,000</span>
-            <span>8,000</span>
-            <span>10,000</span>
-          </div>
-        </div>
-        
-        <div>
-          <div class="flex justify-between items-center mb-1">
-            <p class="text-sm">每周运动次数</p>
-            <p class="text-sm font-medium text-indigo-600">4 次/周</p>
-          </div>
-          <div class="h-1 bg-gray-200 rounded-full">
-            <div class="h-1 bg-indigo-600 rounded-full" style="width: 4/7*100%"></div>
-          </div>
-          <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>3次</span>
-            <span>4次</span>
-            <span>5次</span>
-          </div>
-        </div>
-      </div>
-      
-      <button class="w-full py-2.5 rounded-lg bg-indigo-600 text-white font-medium mt-4">
-        调整健康目标
-      </button>
-    </div>
-    
-    <!-- 饮食偏好 -->
-    <div class="card p-4 mb-5 slide-up" style="animation-delay: 0.3s">
-      <h3 class="font-medium mb-3">饮食偏好</h3>
-      
-      <div class="grid grid-cols-2 gap-3">
-        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-          <span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
-          <span class="text-sm">低脂饮食</span>
-        </div>
-        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-          <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
-          <span class="text-sm">高蛋白</span>
-        </div>
-        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-          <span class="w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
-          <span class="text-sm">少油炸</span>
-        </div>
-        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
-          <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
-          <span class="text-sm">少糖</span>
-        </div>
-      </div>
-    </div>
-    
-    <!-- 系统设置 -->
-    <div class="slide-up" style="animation-delay: 0.4s">
-      <h3 class="font-medium mb-3">系统设置</h3>
-      
-      <div class="card divide-y divide-gray-100">
-        <div class="p-4 flex justify-between items-center">
+    <!-- 页面内容区域 -->
+    <main class="flex-1 overflow-y-auto pb-16" id="main-content">
+      <!-- 用户信息头部 -->
+      <div class="bg-gradient-to-r from-blue-500 to-indigo-600 pt-6 pb-12 px-4 relative">
+        <div class="flex justify-between items-start">
           <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-              </svg>
+            <div class="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="User Avatar" class="w-full h-full object-cover">
             </div>
-            <span class="text-sm font-medium">隐私设置</span>
-          </div>
-          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </div>
-        
-        <div class="p-4 flex justify-between items-center">
-          <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-              </svg>
+            <div class="ml-4 text-white">
+              <h1 class="text-xl font-bold">小轻</h1>
+              <p class="text-sm opacity-90">减重进行中...</p>
             </div>
-            <span class="text-sm font-medium">连接外部设备</span>
           </div>
-          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </div>
-        
-        <div class="p-4 flex justify-between items-center">
-          <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-              </svg>
-            </div>
-            <span class="text-sm font-medium">消息通知</span>
-          </div>
-          <div class="flex items-center">
-            <span class="text-xs text-red-500 mr-1">2</span>
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          <button class="bg-white/20 backdrop-blur-sm h-10 w-10 rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-          </div>
-        </div>
-        
-        <div class="p-4 flex justify-between items-center">
-          <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-              </svg>
-            </div>
-            <span class="text-sm font-medium">高级设置</span>
-          </div>
-          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
+          </button>
         </div>
       </div>
-    </div>
-    
-    <!-- 版本信息 -->
-    <div class="text-center text-xs text-gray-400 mt-8 mb-4 slide-up" style="animation-delay: 0.5s">
-      <p>轻卡伴侣 v1.0.0</p>
-      <p class="mt-1">©2023 轻盈健康科技</p>
-    </div>
-  </div>
-
-  <!-- 底部占位，防止内容被底部导航栏遮挡 -->
-  <div class="h-16"></div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 添加波纹效果
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.classList.add('ripple');
-      });
       
-      // 可点击区域也添加波纹效果
-      const clickables = document.querySelectorAll('.card > div');
-      clickables.forEach(clickable => {
-        clickable.classList.add('ripple');
-        clickable.style.cursor = 'pointer';
-      });
-    });
-  </script>
+      <!-- 信息卡片区域 -->
+      <div class="px-4 -mt-8 mb-6">
+        <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
+          <div class="flex mb-4">
+            <div class="flex-1 text-center border-r border-gray-100 pr-2">
+              <p class="text-2xl font-bold text-indigo-600">65.5<span class="text-sm font-normal">kg</span></p>
+              <p class="text-xs text-gray-500 mt-1">当前体重</p>
+            </div>
+            <div class="flex-1 text-center border-r border-gray-100 px-2">
+              <p class="text-2xl font-bold text-green-500">60<span class="text-sm font-normal">kg</span></p>
+              <p class="text-xs text-gray-500 mt-1">目标体重</p>
+            </div>
+            <div class="flex-1 text-center pl-2">
+              <p class="text-2xl font-bold text-orange-500">5.5<span class="text-sm font-normal">kg</span></p>
+              <p class="text-xs text-gray-500 mt-1">距离目标</p>
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="flex justify-between items-center mb-2">
+              <p class="text-sm font-medium">减重进度</p>
+              <p class="text-sm font-medium text-indigo-600">45%</p>
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="bg-indigo-600 h-full rounded-full" style="width: 45%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 功能区 -->
+      <div class="px-4 mb-6">
+        <h2 class="text-lg font-semibold mb-3">健康管理</h2>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden mb-4">
+          <a href="#" class="flex items-center p-4 border-b border-gray-100">
+            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">体重记录</h3>
+              <p class="text-sm text-gray-500">记录体重变化趋势</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <a href="#" class="flex items-center p-4 border-b border-gray-100">
+            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">健康指标</h3>
+              <p class="text-sm text-gray-500">查看BMI、体脂率等健康指标</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <a href="#" class="flex items-center p-4">
+            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">健康目标</h3>
+              <p class="text-sm text-gray-500">设置和管理您的健康目标</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+        
+        <h2 class="text-lg font-semibold mb-3">应用设置</h2>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden mb-4">
+          <a href="#" class="flex items-center p-4 border-b border-gray-100">
+            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">通知设置</h3>
+              <p class="text-sm text-gray-500">管理应用通知和提醒</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <a href="#" class="flex items-center p-4 border-b border-gray-100">
+            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">偏好设置</h3>
+              <p class="text-sm text-gray-500">个性化您的应用体验</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <a href="#" class="flex items-center p-4">
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">帮助与反馈</h3>
+              <p class="text-sm text-gray-500">获取帮助或发送反馈</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+          <a href="#" class="flex items-center p-4 text-red-500">
+            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-medium">退出登录</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- 版本信息 -->
+      <div class="text-center text-xs text-gray-400 mb-10">
+        <p>轻卡伴侣 v1.0.0</p>
+        <p class="mt-1">Copyright © 2023 All Rights Reserved</p>
+      </div>
+    </main>
+    
+    <!-- 导航容器 -->
+    <div id="navigation-container"></div>
+  </div>
+  
+  <!-- 引入导航组件 -->
+  <script src="js/navigation.js"></script>
 </body>
 </html> 
