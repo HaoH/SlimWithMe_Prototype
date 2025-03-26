@@ -56,5 +56,55 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script>
+    // 获取所有页面iframe
+    const pageIframes = document.querySelectorAll('.content-frame');
+    const navItems = document.querySelectorAll('.nav-item');
+    const navBar = document.querySelector('.nav-bar');
+    
+    // 当前活跃的页面索引
+    let activePageIndex = 0;
+    
+    // 隐藏导航栏功能
+    window.hideNavigation = function() {
+      navBar.style.transform = 'translateY(100%)';
+    };
+    
+    // 显示导航栏功能
+    window.showNavigation = function() {
+      navBar.style.transform = 'translateY(0)';
+    };
+    
+    // 初始切换到首页
+    switchPage(0);
+    
+    // 注册导航项点击事件
+    navItems.forEach((item, index) => {
+      item.addEventListener('click', function() {
+        // 如果点击相机按钮，隐藏导航栏
+        if (index === 2) { // 假设相机按钮索引为2
+          hideNavigation();
+        } else {
+          showNavigation();
+        }
+        
+        switchPage(index);
+      });
+    });
+    
+    // 切换页面函数
+    function switchPage(index) {
+      // 更新活跃导航项
+      navItems[activePageIndex].classList.remove('active');
+      navItems[index].classList.add('active');
+      
+      // 更新活跃页面
+      pageIframes[activePageIndex].style.display = 'none';
+      pageIframes[index].style.display = 'block';
+      
+      // 更新当前活跃页面索引
+      activePageIndex = index;
+    }
+  </script>
 </body>
 </html> 

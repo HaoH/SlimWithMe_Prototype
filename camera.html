@@ -3,269 +3,408 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>拍照识别 - 轻卡伴侣</title>
+  <title>轻卡伴侣 - 拍照识别</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .camera-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    
+    .camera-viewfinder {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #111;
+    }
+    
+    .camera-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .camera-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    
+    .camera-header-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      backdrop-filter: blur(5px);
+    }
+    
+    .meal-type-selector {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    
+    .meal-type-btn {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.2s;
+      backdrop-filter: blur(5px);
+    }
+    
+    .meal-type-btn.active {
+      background-color: rgba(72, 187, 120, 0.9);
+      border-color: rgba(72, 187, 120, 1);
+    }
+    
+    .camera-controls {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background-color: #000;
+      position: relative;
+    }
+    
+    .camera-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .camera-btn::after {
+      content: '';
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 2px solid #000;
+      position: absolute;
+    }
+    
+    .gallery-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .camera-switch {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .flash-options {
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      z-index: 100;
+      transform: scale(0);
+      transform-origin: top right;
+      transition: transform 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    
+    .flash-options.show {
+      transform: scale(1);
+    }
+    
+    .flash-option {
+      color: white;
+      padding: 12px 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .flash-option svg {
+      margin-right: 10px;
+    }
+    
+    .flash-option:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .shutter-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0;
+      z-index: 200;
+      pointer-events: none;
+    }
+    
+    @keyframes shutter {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: 16px;
+      width: 80%;
+      max-width: 320px;
+      overflow: hidden;
+    }
+    
+    .modal-header {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .modal-body {
+      padding: 20px 16px;
+    }
+    
+    .modal-footer {
+      display: flex;
+      border-top: 1px solid #e2e8f0;
+    }
+    
+    .modal-btn {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    .modal-btn:not(:last-child) {
+      border-right: 1px solid #e2e8f0;
+    }
+    
+    .modal-btn.primary {
+      color: #48bb78;
+    }
+  </style>
 </head>
-<body class="bg-gray-50">
-  <!-- 顶部导航 -->
-  <header class="bg-white px-4 py-3 flex items-center justify-between shadow-sm sticky top-0 z-10">
-    <h1 class="text-lg font-medium">智能餐盘分析</h1>
-    <div>
-      <button id="toggleHelpBtn" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
-        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+<body>
+  <div class="camera-container">
+    <div class="camera-viewfinder">
+      <div class="camera-preview"></div>
+      
+      <div class="camera-header">
+        <button class="camera-header-btn" id="closeBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <button class="camera-header-btn" id="flashBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="meal-type-selector">
+        <button class="meal-type-btn active" data-type="breakfast">早餐</button>
+        <button class="meal-type-btn" data-type="lunch">午餐</button>
+        <button class="meal-type-btn" data-type="dinner">晚餐</button>
+        <button class="meal-type-btn" data-type="snack">加餐</button>
+      </div>
+    </div>
+    
+    <div class="camera-controls">
+      <button class="gallery-btn" id="galleryBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </button>
+      
+      <button class="camera-btn" id="shutterBtn"></button>
+      
+      <button class="camera-switch" id="switchBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
         </svg>
       </button>
     </div>
-  </header>
-
-  <div class="px-4 py-4">
-    <!-- 拍照区域 -->
-    <div class="mb-5 slide-up">
-      <div class="relative">
-        <div id="cameraPreview" class="h-72 bg-gray-800 rounded-2xl flex items-center justify-center overflow-hidden">
-          <img id="previewImage" class="hidden w-full h-full object-cover" src="" alt="预览">
-          <div id="cameraPlaceholder" class="text-center text-white">
-            <svg class="w-16 h-16 mx-auto mb-2 text-white/70" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-            </svg>
-            <p class="text-sm text-white/80">轻触拍摄按钮开始</p>
-          </div>
-        </div>
-        
-        <!-- 取景框参考线 -->
-        <div id="viewfinderGuide" class="absolute inset-0 border-2 border-white/40 rounded-2xl pointer-events-none hidden">
-          <div class="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-white"></div>
-          <div class="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-white"></div>
-          <div class="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-white"></div>
-          <div class="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-white"></div>
-        </div>
-        
-        <!-- 拍摄按钮区域 -->
-        <div class="absolute -bottom-8 left-0 right-0 flex justify-center">
-          <button id="captureBtn" class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center">
-            <div class="w-12 h-12 rounded-full border-4 border-indigo-600"></div>
-          </button>
-        </div>
+    
+    <div class="flash-options" id="flashOptions">
+      <div class="flash-option">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        自动
+      </div>
+      <div class="flash-option">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        开启
+      </div>
+      <div class="flash-option">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+        </svg>
+        关闭
       </div>
     </div>
     
-    <!-- 操作提示 -->
-    <div class="mt-12 mb-6 text-center text-sm text-gray-500 slide-up" style="animation-delay: 0.1s">
-      <p>请将食物放在中间位置，确保光线充足</p>
-    </div>
-    
-    <!-- 分析结果（默认隐藏） -->
-    <div id="resultSection" class="hidden mt-4">
-      <!-- 分析中 -->
-      <div id="analyzingSection" class="py-6 text-center slide-up">
-        <div class="loading mx-auto mb-3"></div>
-        <p class="text-gray-500">AI正在分析你的餐盘...</p>
+    <div class="shutter-animation" id="shutterEffect"></div>
+  </div>
+  
+  <div class="modal-backdrop" id="permissionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="font-medium text-gray-800">相机权限</h3>
       </div>
-      
-      <!-- 分析结果 -->
-      <div id="analysisResult" class="hidden">
-        <div class="card p-4 mb-5 slide-up">
-          <h3 class="font-medium mb-3">餐盘分析结果</h3>
-          
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <p class="text-sm text-gray-500">总热量</p>
-              <div class="flex items-end">
-                <span class="text-3xl font-bold text-indigo-600">520</span>
-                <span class="ml-1 mb-1 text-gray-500">大卡</span>
-              </div>
-            </div>
-            <div class="px-3 py-1 bg-blue-50 rounded-lg">
-              <p class="text-xs text-blue-700">建议摄入: 450 大卡</p>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-3 gap-3 mb-4">
-            <div class="bg-gray-50 p-3 rounded-lg text-center">
-              <p class="text-xs text-gray-500 mb-1">碳水</p>
-              <p class="text-lg font-medium">65<span class="text-xs ml-1">g</span></p>
-              <div class="mt-1 h-1 bg-gray-200 rounded-full">
-                <div class="h-1 bg-blue-500 rounded-full" style="width: 72%"></div>
-              </div>
-            </div>
-            <div class="bg-gray-50 p-3 rounded-lg text-center">
-              <p class="text-xs text-gray-500 mb-1">蛋白质</p>
-              <p class="text-lg font-medium">28<span class="text-xs ml-1">g</span></p>
-              <div class="mt-1 h-1 bg-gray-200 rounded-full">
-                <div class="h-1 bg-green-500 rounded-full" style="width: 56%"></div>
-              </div>
-            </div>
-            <div class="bg-gray-50 p-3 rounded-lg text-center">
-              <p class="text-xs text-gray-500 mb-1">脂肪</p>
-              <p class="text-lg font-medium">18<span class="text-xs ml-1">g</span></p>
-              <div class="mt-1 h-1 bg-gray-200 rounded-full">
-                <div class="h-1 bg-yellow-500 rounded-full" style="width: 65%"></div>
-              </div>
-            </div>
-          </div>
-          
-          <h4 class="text-sm font-medium mb-2">识别到的食物</h4>
-          <div class="space-y-2 mb-4">
-            <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
-              <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200 mr-2">
-                  <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=60&h=60&q=80" class="w-full h-full object-cover">
-                </div>
-                <span class="text-sm">糙米饭</span>
-              </div>
-              <div class="text-sm text-gray-500">220大卡</div>
-            </div>
-            <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
-              <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200 mr-2">
-                  <img src="https://images.unsplash.com/photo-1625944526985-8c5868593d67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=60&h=60&q=80" class="w-full h-full object-cover">
-                </div>
-                <span class="text-sm">清炒西兰花</span>
-              </div>
-              <div class="text-sm text-gray-500">80大卡</div>
-            </div>
-            <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
-              <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200 mr-2">
-                  <img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=60&h=60&q=80" class="w-full h-full object-cover">
-                </div>
-                <span class="text-sm">红烧带鱼</span>
-              </div>
-              <div class="text-sm text-gray-500">220大卡</div>
-            </div>
-          </div>
-          
-          <h4 class="text-sm font-medium mb-2">健康分析</h4>
-          <div class="p-3 bg-yellow-50 rounded-lg mb-4">
-            <div class="flex">
-              <svg class="w-5 h-5 text-yellow-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-              </svg>
-              <div>
-                <p class="text-sm text-yellow-700 font-medium">红烧带鱼油脂含量较高</p>
-                <p class="text-xs text-yellow-600 mt-0.5">建议吸油纸处理，减少约50大卡</p>
-              </div>
-            </div>
-          </div>
-          
-          <h4 class="text-sm font-medium mb-2">优化建议</h4>
-          <div class="p-3 bg-green-50 rounded-lg">
-            <div class="flex">
-              <svg class="w-5 h-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <div>
-                <p class="text-sm text-green-700 font-medium">整体营养搭配均衡</p>
-                <p class="text-xs text-green-600 mt-0.5">建议将1/3的米饭留作加餐，减轻餐后血糖波动</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- 操作按钮 -->
-        <div class="flex space-x-3 mb-6 slide-up" style="animation-delay: 0.2s">
-          <button class="flex-1 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium">
-            重新拍摄
-          </button>
-          <button class="flex-1 py-3 rounded-lg bg-indigo-600 text-white font-medium">
-            记录饮食
-          </button>
-        </div>
+      <div class="modal-body">
+        <p class="text-gray-600 text-center">需要使用您的相机来拍摄食物照片，请允许相机权限。</p>
       </div>
-    </div>
-    
-    <!-- 使用指南（默认隐藏） -->
-    <div id="helpGuide" class="fixed inset-0 bg-black/80 z-20 flex items-center justify-center p-4 hidden">
-      <div class="bg-white rounded-xl p-5 max-w-xs w-full relative">
-        <button id="closeHelpBtn" class="absolute right-3 top-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
-          <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-        
-        <h3 class="text-lg font-bold mb-3">拍照指南</h3>
-        <div class="space-y-3 text-sm">
-          <div class="flex">
-            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 flex-shrink-0">1</div>
-            <p>将餐盘放置在平整表面，确保光线充足</p>
-          </div>
-          <div class="flex">
-            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 flex-shrink-0">2</div>
-            <p>手机与餐盘保持垂直，距离约30厘米</p>
-          </div>
-          <div class="flex">
-            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 flex-shrink-0">3</div>
-            <p>尽可能完整拍摄所有食物，包括餐盘边缘</p>
-          </div>
-          <div class="flex">
-            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 flex-shrink-0">4</div>
-            <p>如果识别不准确，可以多角度补拍</p>
-          </div>
-        </div>
+      <div class="modal-footer">
+        <button class="modal-btn" id="cancelPermission">取消</button>
+        <button class="modal-btn primary" id="allowPermission">允许</button>
       </div>
     </div>
   </div>
-
-  <!-- 底部占位，防止内容被底部导航栏遮挡 -->
-  <div class="h-16"></div>
-
+  
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-      const previewImage = document.getElementById('previewImage');
-      const captureBtn = document.getElementById('captureBtn');
-      const viewfinderGuide = document.getElementById('viewfinderGuide');
-      const resultSection = document.getElementById('resultSection');
-      const analyzingSection = document.getElementById('analyzingSection');
-      const analysisResult = document.getElementById('analysisResult');
-      const toggleHelpBtn = document.getElementById('toggleHelpBtn');
-      const helpGuide = document.getElementById('helpGuide');
-      const closeHelpBtn = document.getElementById('closeHelpBtn');
-      
-      // 模拟相机启动
-      setTimeout(() => {
-        cameraPlaceholder.classList.add('hidden');
-        previewImage.src = 'https://images.unsplash.com/photo-1546069901-5ec6a79120b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80';
-        previewImage.classList.remove('hidden');
-        viewfinderGuide.classList.remove('hidden');
-      }, 1000);
-      
-      // 模拟拍照和分析过程
-      captureBtn.addEventListener('click', () => {
-        // 显示拍照闪光效果
-        const flash = document.createElement('div');
-        flash.className = 'absolute inset-0 bg-white z-10';
-        document.getElementById('cameraPreview').appendChild(flash);
-        
-        setTimeout(() => {
-          flash.remove();
-          resultSection.classList.remove('hidden');
-          analyzingSection.classList.remove('hidden');
-          
-          // 模拟AI分析延迟
-          setTimeout(() => {
-            analyzingSection.classList.add('hidden');
-            analysisResult.classList.remove('hidden');
-          }, 2000);
-        }, 150);
+    // 获取元素
+    const flashBtn = document.getElementById('flashBtn');
+    const flashOptions = document.getElementById('flashOptions');
+    const shutterBtn = document.getElementById('shutterBtn');
+    const shutterEffect = document.getElementById('shutterEffect');
+    const closeBtn = document.getElementById('closeBtn');
+    const mealTypeBtns = document.querySelectorAll('.meal-type-btn');
+    const galleryBtn = document.getElementById('galleryBtn');
+    
+    // 通知父页面隐藏底部导航
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.parent && window.parent.hideNavigation) {
+        window.parent.hideNavigation();
+      }
+    });
+    
+    // 闪光灯选项切换
+    flashBtn.addEventListener('click', function() {
+      flashOptions.classList.toggle('show');
+    });
+    
+    // 点击关闭按钮
+    closeBtn.addEventListener('click', function() {
+      // 通知父页面显示底部导航
+      if (window.parent && window.parent.showNavigation) {
+        window.parent.showNavigation();
+      }
+      window.location.href = 'index.html';
+    });
+    
+    // 选择餐食类型
+    mealTypeBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        mealTypeBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
       });
+    });
+    
+    // 点击拍照按钮
+    shutterBtn.addEventListener('click', function() {
+      // 拍照动画
+      shutterEffect.style.animation = 'shutter 0.5s forwards';
       
-      // 帮助指南显示/隐藏
-      toggleHelpBtn.addEventListener('click', () => {
-        helpGuide.classList.remove('hidden');
-      });
+      // 动画结束后跳转到分析页面
+      setTimeout(function() {
+        window.location.href = 'food-analysis.html';
+      }, 500);
+    });
+    
+    // 点击相册按钮
+    galleryBtn.addEventListener('click', function() {
+      // 模拟打开相册
+      console.log('打开相册');
       
-      closeHelpBtn.addEventListener('click', () => {
-        helpGuide.classList.add('hidden');
-      });
-      
-      // 添加波纹效果
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.classList.add('ripple');
-      });
+      // 这里可以添加打开相册的逻辑
+      // 模拟选择照片后进入分析页面
+      setTimeout(function() {
+        window.location.href = 'food-analysis.html';
+      }, 500);
+    });
+    
+    // 重置动画
+    shutterEffect.addEventListener('animationend', function() {
+      this.style.animation = '';
+    });
+    
+    // 关闭页面点击其他区域关闭闪光灯选项
+    document.addEventListener('click', function(e) {
+      if (e.target !== flashBtn && !flashOptions.contains(e.target)) {
+        flashOptions.classList.remove('show');
+      }
     });
   </script>
 </body>
