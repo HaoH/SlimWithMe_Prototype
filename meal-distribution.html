@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻卡伴侣 - 能量分配</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 20px;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background-color: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background-color: #48bb78;
+      width: 90%;
+    }
+    
+    .btn-primary {
+      background-color: #48bb78;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 18px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #48bb78;
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    
+    .meal-slot {
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background-color: white;
+    }
+    
+    .meal-slot.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .recommend-btn {
+      background-color: #f0fff4;
+      color: #48bb78;
+      border: 1px solid #c6f6d5;
+    }
+    
+    .recommend-btn:hover {
+      background-color: #e6fffa;
+    }
+    
+    .total-percent {
+      color: #48bb78;
+    }
+    
+    .total-percent.error {
+      color: #f56565;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <div class="info-container">
+    <div class="mt-4">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h1 class="text-2xl font-bold text-center text-gray-800 mt-8">能量分配方案</h1>
+      <p class="text-center text-gray-600 mt-2">根据您的习惯，调整各餐的能量分配比例</p>
+      <p class="text-center text-green-600 text-sm mt-1 font-medium">每日总能量: <span id="totalCalories">1500</span> 千卡</p>
+    </div>
+    
+    <div class="flex-grow overflow-auto py-6">
+      <div class="max-w-sm mx-auto space-y-4">
+        <!-- 早餐 -->
+        <div id="breakfastSlot" class="meal-slot p-4">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 mr-3">
+                <i class="ri-sun-line text-xl"></i>
+              </div>
+              <span class="font-medium">早餐</span>
+            </div>
+            <div class="text-right">
+              <span id="breakfastPercent" class="text-lg font-bold text-green-600">20%</span>
+              <p class="text-sm text-gray-500"><span id="breakfastCalories">300</span> 千卡</p>
+            </div>
+          </div>
+          <input type="range" id="breakfastRange" min="10" max="40" value="20" class="mt-2" data-meal="breakfast">
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>10%</span>
+            <span>40%</span>
+          </div>
+        </div>
+        
+        <!-- 午餐 -->
+        <div id="lunchSlot" class="meal-slot p-4">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-3">
+                <i class="ri-sun-foggy-line text-xl"></i>
+              </div>
+              <span class="font-medium">午餐</span>
+            </div>
+            <div class="text-right">
+              <span id="lunchPercent" class="text-lg font-bold text-green-600">40%</span>
+              <p class="text-sm text-gray-500"><span id="lunchCalories">600</span> 千卡</p>
+            </div>
+          </div>
+          <input type="range" id="lunchRange" min="20" max="50" value="40" class="mt-2" data-meal="lunch">
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>20%</span>
+            <span>50%</span>
+          </div>
+        </div>
+        
+        <!-- 下午茶 -->
+        <div id="teaSlot" class="meal-slot p-4">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-3">
+                <i class="ri-cup-line text-xl"></i>
+              </div>
+              <span class="font-medium">下午茶</span>
+            </div>
+            <div class="text-right">
+              <span id="teaPercent" class="text-lg font-bold text-green-600">10%</span>
+              <p class="text-sm text-gray-500"><span id="teaCalories">150</span> 千卡</p>
+            </div>
+          </div>
+          <input type="range" id="teaRange" min="5" max="20" value="10" class="mt-2" data-meal="tea">
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>5%</span>
+            <span>20%</span>
+          </div>
+        </div>
+        
+        <!-- 晚餐 -->
+        <div id="dinnerSlot" class="meal-slot p-4">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 mr-3">
+                <i class="ri-moon-line text-xl"></i>
+              </div>
+              <span class="font-medium">晚餐</span>
+            </div>
+            <div class="text-right">
+              <span id="dinnerPercent" class="text-lg font-bold text-green-600">30%</span>
+              <p class="text-sm text-gray-500"><span id="dinnerCalories">450</span> 千卡</p>
+            </div>
+          </div>
+          <input type="range" id="dinnerRange" min="20" max="50" value="30" class="mt-2" data-meal="dinner">
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>20%</span>
+            <span>50%</span>
+          </div>
+        </div>
+      
+        <div class="flex items-center justify-between my-4">
+          <div class="flex-1 h-0.5 bg-gray-200"></div>
+          <span class="px-4 text-sm text-gray-500">总计</span>
+          <div class="flex-1 h-0.5 bg-gray-200"></div>
+        </div>
+        
+        <div class="bg-green-50 p-4 rounded-lg">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-sm text-gray-600">总百分比</span>
+              <p id="totalPercent" class="font-bold text-lg total-percent">100%</p>
+            </div>
+            <div class="text-sm text-gray-500">
+              <span>总能量：</span>
+              <span id="totalCaloriesBottom" class="font-medium">1500</span>
+              <span>千卡</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 推荐按钮 -->
+        <div>
+          <button id="recommendBtn" class="recommend-btn w-full py-3 rounded-lg font-medium flex items-center justify-center">
+            <i class="ri-magic-line mr-2"></i>
+            使用推荐比例
+          </button>
+          <p class="text-sm text-gray-500 text-center mt-2">依据营养学建议，为您设置科学的能量分配比例</p>
+        </div>
+        
+        <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+          <div class="flex">
+            <i class="ri-information-line text-blue-600 text-xl mr-3 flex-shrink-0 mt-0.5"></i>
+            <p class="text-sm text-blue-700">调整饮食分配可以根据您的习惯和作息安排，下午的能量摄入会比上午更容易消耗。您可以随时在个人设置中调整这些比例。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mb-10">
+      <button id="nextBtn" class="btn-primary block shadow-lg">
+        生成我的瘦身计划
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    // 初始化数据
+    const totalCalories = 1500; // 假设总热量为1500千卡
+    let mealFrequency = localStorage.getItem('mealFrequency') || '3'; // 默认3餐
+    
+    // 引用元素
+    const totalCaloriesElements = document.querySelectorAll('#totalCalories, #totalCaloriesBottom');
+    const totalPercentElement = document.getElementById('totalPercent');
+    const nextBtn = document.getElementById('nextBtn');
+    const recommendBtn = document.getElementById('recommendBtn');
+    
+    // 初始化总卡路里显示
+    totalCaloriesElements.forEach(el => el.textContent = totalCalories);
+    
+    // 餐食槽位元素
+    const mealSlots = {
+      breakfast: document.getElementById('breakfastSlot'),
+      tea: document.getElementById('teaSlot'),
+      lunch: document.getElementById('lunchSlot'),
+      dinner: document.getElementById('dinnerSlot')
+    };
+    
+    // 根据用户选择的进餐次数初始化页面
+    function initializeMealFrequency() {
+      // 重置所有餐食槽位
+      for (const key in mealSlots) {
+        mealSlots[key].classList.remove('disabled');
+      }
+      
+      switch (mealFrequency) {
+        case '2': // 两餐
+          mealSlots.breakfast.classList.add('disabled');
+          mealSlots.tea.classList.add('disabled');
+          // 调整午餐和晚餐比例
+          document.getElementById('lunchRange').value = 50;
+          document.getElementById('dinnerRange').value = 50;
+          break;
+        case '3': // 三餐
+          mealSlots.tea.classList.add('disabled');
+          // 调整早餐、午餐和晚餐比例
+          document.getElementById('breakfastRange').value = 20;
+          document.getElementById('lunchRange').value = 40;
+          document.getElementById('dinnerRange').value = 40;
+          break;
+        case '4': // 四餐
+          // 保持所有餐食可用
+          document.getElementById('breakfastRange').value = 20;
+          document.getElementById('lunchRange').value = 35;
+          document.getElementById('teaRange').value = 15;
+          document.getElementById('dinnerRange').value = 30;
+          break;
+      }
+      
+      // 更新显示
+      updateAllMealDisplay();
+    }
+    
+    // 推荐比例
+    function setRecommendedRatios() {
+      switch (mealFrequency) {
+        case '2': // 两餐
+          document.getElementById('lunchRange').value = 50;
+          document.getElementById('dinnerRange').value = 50;
+          break;
+        case '3': // 三餐
+          document.getElementById('breakfastRange').value = 20;
+          document.getElementById('lunchRange').value = 40;
+          document.getElementById('dinnerRange').value = 40;
+          break;
+        case '4': // 四餐
+          document.getElementById('breakfastRange').value = 20;
+          document.getElementById('lunchRange').value = 35;
+          document.getElementById('teaRange').value = 15;
+          document.getElementById('dinnerRange').value = 30;
+          break;
+      }
+      
+      // 更新显示
+      updateAllMealDisplay();
+    }
+    
+    // 更新所有餐食显示
+    function updateAllMealDisplay() {
+      updateMealDisplay('breakfast');
+      updateMealDisplay('lunch');
+      updateMealDisplay('tea');
+      updateMealDisplay('dinner');
+      updateTotalPercent();
+    }
+    
+    // 更新特定餐食显示
+    function updateMealDisplay(meal) {
+      const rangeElement = document.getElementById(`${meal}Range`);
+      const percentElement = document.getElementById(`${meal}Percent`);
+      const caloriesElement = document.getElementById(`${meal}Calories`);
+      
+      if (mealSlots[meal].classList.contains('disabled')) {
+        percentElement.textContent = '0%';
+        caloriesElement.textContent = '0';
+        return;
+      }
+      
+      const percent = rangeElement.value;
+      const calories = Math.round((percent / 100) * totalCalories);
+      
+      percentElement.textContent = `${percent}%`;
+      caloriesElement.textContent = calories;
+    }
+    
+    // 更新总百分比
+    function updateTotalPercent() {
+      let total = 0;
+      
+      if (!mealSlots.breakfast.classList.contains('disabled')) {
+        total += parseInt(document.getElementById('breakfastRange').value);
+      }
+      if (!mealSlots.lunch.classList.contains('disabled')) {
+        total += parseInt(document.getElementById('lunchRange').value);
+      }
+      if (!mealSlots.tea.classList.contains('disabled')) {
+        total += parseInt(document.getElementById('teaRange').value);
+      }
+      if (!mealSlots.dinner.classList.contains('disabled')) {
+        total += parseInt(document.getElementById('dinnerRange').value);
+      }
+      
+      totalPercentElement.textContent = `${total}%`;
+      
+      // 如果总百分比不等于100，改变颜色提示
+      if (total !== 100) {
+        totalPercentElement.classList.add('error');
+        totalPercentElement.classList.remove('total-percent');
+        nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        nextBtn.disabled = true;
+      } else {
+        totalPercentElement.classList.remove('error');
+        totalPercentElement.classList.add('total-percent');
+        nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        nextBtn.disabled = false;
+      }
+    }
+    
+    // 滑块事件监听
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      slider.addEventListener('input', function() {
+        const meal = this.dataset.meal;
+        updateMealDisplay(meal);
+        updateTotalPercent();
+      });
+    });
+    
+    // 推荐按钮逻辑
+    recommendBtn.addEventListener('click', setRecommendedRatios);
+    
+    // 下一步按钮逻辑
+    nextBtn.addEventListener('click', () => {
+      // 确保总百分比为100%
+      if (totalPercentElement.textContent === '100%') {
+        // 存储用户设置的能量分配比例
+        const distribution = {
+          breakfast: !mealSlots.breakfast.classList.contains('disabled') ? parseInt(document.getElementById('breakfastRange').value) : 0,
+          lunch: !mealSlots.lunch.classList.contains('disabled') ? parseInt(document.getElementById('lunchRange').value) : 0,
+          tea: !mealSlots.tea.classList.contains('disabled') ? parseInt(document.getElementById('teaRange').value) : 0,
+          dinner: !mealSlots.dinner.classList.contains('disabled') ? parseInt(document.getElementById('dinnerRange').value) : 0
+        };
+        
+        localStorage.setItem('mealDistribution', JSON.stringify(distribution));
+        
+        // 跳转到下一个页面
+        window.location.href = 'weight-plan.html';
+      }
+    });
+    
+    // 初始化页面
+    initializeMealFrequency();
+  </script>
+</body>
+</html> 
