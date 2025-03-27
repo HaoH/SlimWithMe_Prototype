@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - 体重信息</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
@@ -59,9 +60,29 @@
       width: 100%;
       margin: 24px 0;
     }
+
+    .back-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      color: #4b5563;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body class="bg-white">
+  <!-- 返回按钮 -->
+  <a href="index.html" class="back-button">
+    <i class="ri-arrow-left-s-line text-xl"></i>
+  </a>
+
   <div class="info-container">
     <div class="mt-4">
       <div class="progress-bar">

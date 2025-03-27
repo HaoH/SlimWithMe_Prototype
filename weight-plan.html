@@ -47,6 +47,21 @@
       text-align: center;
     }
     
+    .back-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      color: #4b5563;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
     .plan-section {
       background-color: white;
       border: 1px solid #e2e8f0;
@@ -88,6 +103,11 @@
   </style>
 </head>
 <body>
+  <!-- 返回按钮 -->
+  <a href="meal-distribution.html" class="back-button">
+    <i class="ri-arrow-left-s-line text-xl"></i>
+  </a>
+
   <div class="info-container">
     <div class="mt-4">
       <div class="progress-bar">
@@ -237,50 +257,118 @@
           </div>
         </div>
         
-        <!-- 运动建议 -->
+        <!-- 运动方案 -->
         <div class="plan-section p-5 mb-6">
           <h3 class="font-bold text-lg mb-4 flex items-center">
             <i class="ri-walk-line text-green-500 mr-2"></i>
-            建议运动量
+            运动方案
           </h3>
           
-          <div class="flex justify-between mb-4">
-            <div class="flex-1 text-center">
-              <div class="metric-circle bg-blue-100 text-blue-700">
-                <i class="ri-footprint-line text-2xl"></i>
-              </div>
-              <p class="text-xs text-gray-500">每日步数</p>
-              <p class="font-bold text-xl" id="stepsValue">8,000</p>
+          <div id="exerciseSchedule" class="bg-green-50 p-3 rounded-lg mb-4">
+            <div class="flex items-center text-green-700 font-medium mb-2">
+              <i class="ri-calendar-check-line mr-2"></i>
+              <span id="exerciseFrequencyTitle">每周三次运动计划</span>
             </div>
             
-            <div class="flex-1 text-center border-l border-r border-gray-200">
-              <div class="metric-circle bg-green-100 text-green-700">
-                <i class="ri-road-map-line text-2xl"></i>
+            <!-- 运动计划列表 -->
+            <div id="exercisePlanList" class="space-y-3 mt-2">
+              <!-- 周一计划 - 动态生成 -->
+              <div id="mondayPlan" class="flex bg-white rounded-lg p-3 border border-green-100">
+                <div class="flex-shrink-0 w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <div class="text-center">
+                    <div class="text-green-700 font-medium">周一</div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center">
+                    <i class="ri-run-line text-orange-500 mr-1"></i>
+                    <span id="mondayActivity" class="font-medium">爬楼梯30分钟</span>
+                  </div>
+                  <div class="text-sm text-gray-500 mt-1">
+                    消耗约 <span id="mondayCalories" class="font-medium text-green-600">180</span> 千卡
+                  </div>
+                  <div class="flex items-center text-xs text-gray-500 mt-1">
+                    <i class="ri-heart-pulse-line mr-1 text-orange-400"></i>
+                    <span id="mondayIntensity">中等强度</span>
+                  </div>
+                </div>
               </div>
-              <p class="text-xs text-gray-500">每日距离</p>
-              <p class="font-bold text-xl" id="distanceValue">5.5 km</p>
+              
+              <!-- 周三计划 - 动态生成 -->
+              <div id="wednesdayPlan" class="flex bg-white rounded-lg p-3 border border-green-100">
+                <div class="flex-shrink-0 w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <div class="text-center">
+                    <div class="text-green-700 font-medium">周三</div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center">
+                    <i class="ri-run-line text-orange-500 mr-1"></i>
+                    <span id="wednesdayActivity" class="font-medium">爬楼梯30分钟</span>
+                  </div>
+                  <div class="text-sm text-gray-500 mt-1">
+                    消耗约 <span id="wednesdayCalories" class="font-medium text-green-600">180</span> 千卡
+                  </div>
+                  <div class="flex items-center text-xs text-gray-500 mt-1">
+                    <i class="ri-heart-pulse-line mr-1 text-orange-400"></i>
+                    <span id="wednesdayIntensity">中等强度</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 周五计划 - 动态生成 -->
+              <div id="fridayPlan" class="flex bg-white rounded-lg p-3 border border-green-100">
+                <div class="flex-shrink-0 w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <div class="text-center">
+                    <div class="text-green-700 font-medium">周五</div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center">
+                    <i class="ri-run-line text-orange-500 mr-1"></i>
+                    <span id="fridayActivity" class="font-medium">爬楼梯30分钟</span>
+                  </div>
+                  <div class="text-sm text-gray-500 mt-1">
+                    消耗约 <span id="fridayCalories" class="font-medium text-green-600">180</span> 千卡
+                  </div>
+                  <div class="flex items-center text-xs text-gray-500 mt-1">
+                    <i class="ri-heart-pulse-line mr-1 text-orange-400"></i>
+                    <span id="fridayIntensity">中等强度</span>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div class="flex-1 text-center">
-              <div class="metric-circle bg-yellow-100 text-yellow-700">
-                <i class="ri-time-line text-2xl"></i>
+            <!-- 周运动总结 -->
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-green-200">
+              <div class="flex items-center text-green-700">
+                <i class="ri-time-line mr-2"></i>
+                <span>每周总消耗：</span>
               </div>
-              <p class="text-xs text-gray-500">每日活动</p>
-              <p class="font-bold text-xl" id="timeValue">45 分钟</p>
+              <div>
+                <span id="weeklyTotalCalories" class="font-bold text-green-700">540</span>
+                <span class="text-green-700"> 千卡</span>
+              </div>
             </div>
           </div>
           
-          <p class="text-sm text-gray-600"><i class="ri-information-line text-green-500 mr-1"></i> 走路是最简单有效的运动方式，对膝盖压力小，易于坚持，符合您的减重目标。</p>
+          <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-100">
+            <div class="flex">
+              <i class="ri-information-line text-blue-600 mr-2 mt-0.5 flex-shrink-0"></i>
+              <p>以上计划基于您选择的运动习惯制定，具体运动类型可灵活调整。例如爬楼梯可替换为游泳、骑车或其他同等强度的运动，只需保持相同的时长和强度即可。</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     
     <div class="mb-10">
-      <button id="completeBtn" class="btn-primary block shadow-lg">
-        开始我的减重计划
-        <i class="ri-arrow-right-line ml-2"></i>
-      </button>
-      <p class="text-sm text-gray-500 text-center mt-2">以上数据可随时在个人设置中调整</p>
+      <a href="dashboard.html" class="btn-primary block shadow-lg">
+        开始我的瘦身计划
+      </a>
+      <a href="index.html" class="text-gray-400 text-sm text-center block mt-4 hover:text-gray-500 transition-colors">
+        放弃
+      </a>
     </div>
   </div>
   
@@ -293,6 +381,8 @@
       tea: 10,
       dinner: 30
     };
+    const exerciseFrequency = localStorage.getItem('exerciseFrequency') || '3';
+    const exerciseIntensity = localStorage.getItem('exerciseIntensity') || 'moderate';
     
     // 每日总热量（假设）
     const dailyCalories = 1500;
@@ -307,6 +397,217 @@
     
     // 更新热量显示
     document.getElementById('dailyCaloriesValue').textContent = `${dailyCalories} 千卡`;
+    
+    // 更新运动方案显示
+    function updateExerciseDisplay() {
+      // 设置运动计划标题
+      let frequencyTitle = '';
+      let daysOfWeek = [];
+      let burnedCaloriesPerSession = 0;
+      
+      // 获取活动名称和图标
+      let activityName = '';
+      let activityIntensity = '';
+      
+      // 设置强度和活动
+      switch(exerciseIntensity) {
+        case 'light':
+          activityName = '慢走30分钟';
+          activityIntensity = '轻微强度';
+          burnedCaloriesPerSession = 120;
+          break;
+        case 'moderate':
+          activityName = '爬楼梯30分钟';
+          activityIntensity = '中等强度';
+          burnedCaloriesPerSession = 180;
+          break;
+        case 'high':
+          activityName = 'HIIT训练20分钟';
+          activityIntensity = '高强度';
+          burnedCaloriesPerSession = 220;
+          break;
+        default:
+          activityName = '爬楼梯30分钟';
+          activityIntensity = '中等强度';
+          burnedCaloriesPerSession = 180;
+      }
+      
+      // 根据频率设置每周几天运动
+      switch(exerciseFrequency) {
+        case '2':
+          frequencyTitle = '每周两次运动计划';
+          daysOfWeek = ['monday', 'thursday'];
+          
+          // 显示周一、周四
+          document.getElementById('mondayPlan').style.display = 'flex';
+          document.getElementById('wednesdayPlan').style.display = 'none';
+          document.getElementById('fridayPlan').style.display = 'none';
+          
+          // 移除可能已有的周四元素
+          const existingThursday = document.getElementById('thursdayPlan');
+          if (existingThursday) {
+            existingThursday.remove();
+          }
+          
+          // 创建周四
+          const thursdayElement1 = document.getElementById('mondayPlan').cloneNode(true);
+          thursdayElement1.id = 'thursdayPlan';
+          thursdayElement1.querySelector('.text-green-700').textContent = '周四';
+          
+          // 替换周一后面的元素
+          document.getElementById('mondayPlan').after(thursdayElement1);
+          break;
+          
+        case '3':
+          frequencyTitle = '每周三次运动计划';
+          daysOfWeek = ['monday', 'wednesday', 'friday'];
+          
+          // 移除可能存在的额外天数
+          const extraDays1 = document.querySelectorAll('#thursdayPlan, #tuesdayPlan');
+          extraDays1.forEach(el => el && el.remove());
+          
+          // 显示周一、周三、周五
+          document.getElementById('mondayPlan').style.display = 'flex';
+          document.getElementById('wednesdayPlan').style.display = 'flex';
+          document.getElementById('fridayPlan').style.display = 'flex';
+          break;
+          
+        case '5':
+          frequencyTitle = '每周五次运动计划（工作日）';
+          daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+          
+          // 移除可能存在的额外天数
+          const extraDays2 = document.querySelectorAll('#thursdayPlan, #tuesdayPlan');
+          extraDays2.forEach(el => el && el.remove());
+          
+          // 基本三天
+          document.getElementById('mondayPlan').style.display = 'flex';
+          document.getElementById('wednesdayPlan').style.display = 'flex';
+          document.getElementById('fridayPlan').style.display = 'flex';
+          
+          // 添加周二
+          const tuesday = document.getElementById('mondayPlan').cloneNode(true);
+          tuesday.id = 'tuesdayPlan';
+          tuesday.querySelector('.text-green-700').textContent = '周二';
+          
+          // 添加周四
+          const thursdayElement2 = document.getElementById('wednesdayPlan').cloneNode(true);
+          thursdayElement2.id = 'thursdayPlan';
+          thursdayElement2.querySelector('.text-green-700').textContent = '周四';
+          
+          // 插入新元素
+          document.getElementById('mondayPlan').after(tuesday);
+          document.getElementById('wednesdayPlan').after(thursdayElement2);
+          break;
+          
+        case '7':
+          frequencyTitle = '每日运动计划';
+          daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+          
+          // 首先清空容器
+          const container = document.getElementById('exercisePlanList');
+          container.innerHTML = '';
+          
+          // 为每天创建计划
+          const days = [
+            {day: '周一'}, 
+            {day: '周二'}, 
+            {day: '周三'}, 
+            {day: '周四'}, 
+            {day: '周五'}, 
+            {day: '周六'}, 
+            {day: '周日'}
+          ];
+          
+          days.forEach(day => {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'flex bg-white rounded-lg p-3 border border-green-100';
+            dayEl.innerHTML = `
+              <div class="flex-shrink-0 w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                <div class="text-center">
+                  <div class="text-green-700 font-medium">${day.day}</div>
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center">
+                  <i class="ri-run-line text-orange-500 mr-1"></i>
+                  <span class="font-medium">${activityName}</span>
+                </div>
+                <div class="text-sm text-gray-500 mt-1">
+                  消耗约 <span class="font-medium text-green-600">${burnedCaloriesPerSession}</span> 千卡
+                </div>
+                <div class="flex items-center text-xs text-gray-500 mt-1">
+                  <i class="ri-heart-pulse-line mr-1 text-orange-400"></i>
+                  <span>${activityIntensity}</span>
+                </div>
+              </div>
+            `;
+            container.appendChild(dayEl);
+          });
+          break;
+          
+        default:
+          frequencyTitle = '每周三次运动计划';
+          daysOfWeek = ['monday', 'wednesday', 'friday'];
+          
+          // 显示周一、周三、周五
+          document.getElementById('mondayPlan').style.display = 'flex';
+          document.getElementById('wednesdayPlan').style.display = 'flex';
+          document.getElementById('fridayPlan').style.display = 'flex';
+      }
+      
+      // 更新默认三天的内容
+      if (exerciseFrequency !== '7') {
+        // 更新周一
+        if (document.getElementById('mondayPlan')) {
+          document.getElementById('mondayActivity').textContent = activityName;
+          document.getElementById('mondayCalories').textContent = burnedCaloriesPerSession;
+          document.getElementById('mondayIntensity').textContent = activityIntensity;
+        }
+        
+        // 更新周三
+        if (document.getElementById('wednesdayPlan')) {
+          document.getElementById('wednesdayActivity').textContent = activityName;
+          document.getElementById('wednesdayCalories').textContent = burnedCaloriesPerSession;
+          document.getElementById('wednesdayIntensity').textContent = activityIntensity;
+        }
+        
+        // 更新周五
+        if (document.getElementById('fridayPlan')) {
+          document.getElementById('fridayActivity').textContent = activityName;
+          document.getElementById('fridayCalories').textContent = burnedCaloriesPerSession;
+          document.getElementById('fridayIntensity').textContent = activityIntensity;
+        }
+        
+        // 更新周二（如果存在）
+        const tuesdayPlan = document.getElementById('tuesdayPlan');
+        if (tuesdayPlan) {
+          const activityElement = tuesdayPlan.querySelector('.flex-1 .font-medium');
+          const caloriesElement = tuesdayPlan.querySelector('.text-green-600');
+          const intensityElement = tuesdayPlan.querySelector('.text-xs.text-gray-500 span');
+          
+          if (activityElement) activityElement.textContent = activityName;
+          if (caloriesElement) caloriesElement.textContent = burnedCaloriesPerSession;
+          if (intensityElement) intensityElement.textContent = activityIntensity;
+        }
+        
+        // 更新周四（如果存在）
+        const thursdayPlan = document.getElementById('thursdayPlan');
+        if (thursdayPlan) {
+          const activityElement = thursdayPlan.querySelector('.flex-1 .font-medium');
+          const caloriesElement = thursdayPlan.querySelector('.text-green-600');
+          const intensityElement = thursdayPlan.querySelector('.text-xs.text-gray-500 span');
+          
+          if (activityElement) activityElement.textContent = activityName;
+          if (caloriesElement) caloriesElement.textContent = burnedCaloriesPerSession;
+          if (intensityElement) intensityElement.textContent = activityIntensity;
+        }
+      }
+      
+      // 更新标题和总消耗
+      document.getElementById('exerciseFrequencyTitle').textContent = frequencyTitle;
+      document.getElementById('weeklyTotalCalories').textContent = burnedCaloriesPerSession * daysOfWeek.length;
+    }
     
     // 更新餐食分配显示
     function updateMealDistribution() {
@@ -359,10 +660,6 @@
       document.getElementById('bmrValue').textContent = '1350';
       document.getElementById('activityValue').textContent = '+450';
       document.getElementById('deficitValue').textContent = '-300';
-      
-      document.getElementById('stepsValue').textContent = '8,000';
-      document.getElementById('distanceValue').textContent = '5.5 km';
-      document.getElementById('timeValue').textContent = '45 分钟';
     }
     
     // 完成按钮事件
@@ -376,6 +673,7 @@
     
     // 初始化页面
     updateMealDistribution();
+    updateExerciseDisplay();
     updateGoals();
   </script>
 </body>

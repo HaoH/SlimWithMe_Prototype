@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - 减重节奏</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
   <style>
     body {
       font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -31,7 +33,7 @@
     .progress-fill {
       height: 100%;
       background-color: #48bb78;
-      width: 100%;
+      width: 50%;
     }
     
     .btn-primary {
@@ -122,6 +124,11 @@
   </style>
 </head>
 <body class="bg-white">
+  <!-- 返回按钮 -->
+  <a href="user-info-goal.html" class="back-button">
+    <i class="ri-arrow-left-s-line text-xl"></i>
+  </a>
+  
   <div class="info-container">
     <div class="mt-4">
       <div class="progress-bar">
@@ -181,7 +188,7 @@
     </div>
     
     <div class="mb-10">
-      <a href="meal-frequency.html" class="btn-primary block shadow-lg">
+      <a href="user-info-exercise.html" class="btn-primary block shadow-lg">
         下一步
       </a>
     </div>

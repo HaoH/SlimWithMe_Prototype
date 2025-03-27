@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻卡伴侣 - 运动偏好</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 20px;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background-color: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background-color: #48bb78;
+      width: 65%;
+    }
+    
+    .btn-primary {
+      background-color: #48bb78;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 18px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .back-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      color: #4b5563;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .exercise-option {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .exercise-option.selected {
+      border-color: #48bb78;
+      background-color: #f0fff4;
+    }
+    
+    .option-check {
+      border-color: #e2e8f0;
+      transition: all 0.2s;
+    }
+    
+    .exercise-option.selected .option-check {
+      border-color: #48bb78;
+    }
+    
+    .exercise-option.selected .check-dot {
+      background-color: #48bb78;
+    }
+    
+    .intensity-tag {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+    
+    .tag-light {
+      background-color: #e6fffa;
+      color: #38b2ac;
+    }
+    
+    .tag-moderate {
+      background-color: #fffaf0;
+      color: #ed8936;
+    }
+    
+    .tag-high {
+      background-color: #fff5f5;
+      color: #e53e3e;
+    }
+    
+    .recommend-btn {
+      background-color: #f0fff4;
+      color: #48bb78;
+      border: 1px solid #c6f6d5;
+    }
+    
+    .recommend-btn:hover {
+      background-color: #e6fffa;
+    }
+    
+    .exercise-tag {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+      display: inline-block;
+      background-color: #f7fafc;
+      color: #4a5568;
+      border: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- 返回按钮 -->
+  <a href="user-info-pace.html" class="back-button">
+    <i class="ri-arrow-left-s-line text-xl"></i>
+  </a>
+  
+  <div class="info-container">
+    <div class="mt-4">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h1 class="text-2xl font-bold text-center text-gray-800 mt-8">您的运动偏好</h1>
+      <p class="text-center text-gray-600 mt-2">选择适合您的运动频率和强度，我们将为您定制合理的运动计划</p>
+    </div>
+    
+    <div class="flex-grow overflow-auto py-4">
+      <div class="max-w-sm mx-auto">
+        <!-- 第一部分：运动频率 -->
+        <h2 class="font-medium text-gray-700 mb-3">运动频率</h2>
+        
+        <div class="exercise-option" onclick="selectFrequency(this, '2')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                <i class="ri-calendar-2-line text-xl"></i>
+              </div>
+              <div>
+                <div class="font-medium">每周两次</div>
+                <div class="text-sm text-gray-500">适合运动基础较弱、时间较少的人群</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exercise-option" onclick="selectFrequency(this, '3')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                <i class="ri-calendar-check-line text-xl"></i>
+              </div>
+              <div>
+                <div class="font-medium">每周三次</div>
+                <div class="text-sm text-gray-500">平衡减重与生活，最常见的健康频率</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exercise-option" onclick="selectFrequency(this, '5')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                <i class="ri-calendar-event-line text-xl"></i>
+              </div>
+              <div>
+                <div class="font-medium">每周五次</div>
+                <div class="text-sm text-gray-500">加速减重过程，适合有一定运动习惯者</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exercise-option" onclick="selectFrequency(this, '7')">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                <i class="ri-calendar-todo-line text-xl"></i>
+              </div>
+              <div>
+                <div class="font-medium">每日运动</div>
+                <div class="text-sm text-gray-500">形成每日运动习惯，最大化减重效果</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 第二部分：运动强度 -->
+        <h2 class="font-medium text-gray-700 mt-6 mb-3">运动强度</h2>
+        
+        <div class="exercise-option" onclick="selectIntensity(this, 'light')">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 mr-3 flex-shrink-0">
+                <i class="ri-walk-line text-xl"></i>
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <span class="font-medium mr-2">轻微强度</span>
+                  <span class="intensity-tag tag-light">低强度</span>
+                </div>
+                <div class="text-sm text-gray-500">轻松舒适，适合所有人群</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+          <div class="pl-13">
+            <div class="flex flex-wrap">
+              <span class="exercise-tag">慢走30分钟</span>
+              <span class="exercise-tag">瑜伽30分钟</span>
+              <span class="exercise-tag">太极30分钟</span>
+              <span class="exercise-tag">轻度拉伸20分钟</span>
+              <span class="exercise-tag">骑自行车30分钟</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exercise-option" onclick="selectIntensity(this, 'moderate')">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-3 flex-shrink-0">
+                <i class="ri-run-line text-xl"></i>
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <span class="font-medium mr-2">中等强度</span>
+                  <span class="intensity-tag tag-moderate">中强度</span>
+                </div>
+                <div class="text-sm text-gray-500">稍有挑战，微微出汗</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+          <div class="pl-13">
+            <div class="flex flex-wrap">
+              <span class="exercise-tag">快走30分钟</span>
+              <span class="exercise-tag">爬楼梯30分钟</span>
+              <span class="exercise-tag">小跑30分钟</span>
+              <span class="exercise-tag">游泳30分钟</span>
+              <span class="exercise-tag">打球30分钟</span>
+              <span class="exercise-tag">跳绳15分钟</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exercise-option" onclick="selectIntensity(this, 'high')">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-3 flex-shrink-0">
+                <i class="ri-heart-pulse-line text-xl"></i>
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <span class="font-medium mr-2">高强度</span>
+                  <span class="intensity-tag tag-high">高强度</span>
+                </div>
+                <div class="text-sm text-gray-500">大量出汗，呼吸急促</div>
+              </div>
+            </div>
+            <div class="option-check w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="hidden bg-green-500 w-4 h-4 rounded-full check-dot"></div>
+            </div>
+          </div>
+          <div class="pl-13">
+            <div class="flex flex-wrap">
+              <span class="exercise-tag">HIIT训练20分钟</span>
+              <span class="exercise-tag">快跑30分钟</span>
+              <span class="exercise-tag">跳绳30分钟</span>
+              <span class="exercise-tag">登山30分钟</span>
+              <span class="exercise-tag">力量训练45分钟</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 推荐按钮 -->
+        <div class="mt-6">
+          <button id="recommendBtn" class="recommend-btn w-full py-3 rounded-lg font-medium flex items-center justify-center">
+            <i class="ri-magic-line mr-2"></i>
+            使用推荐选项
+          </button>
+          <p class="text-sm text-gray-500 text-center mt-2">每周三次、中等强度运动，如爬楼梯30分钟</p>
+        </div>
+        
+        <div class="bg-blue-50 rounded-lg p-4 border border-blue-100 mt-6">
+          <div class="flex">
+            <i class="ri-information-line text-blue-600 text-xl mr-3 flex-shrink-0 mt-0.5"></i>
+            <p class="text-sm text-blue-700">适度运动能加速代谢，帮助减重，您可以根据自己的体能状况灵活调整。每周增加150-300分钟中等强度运动是减重的理想选择。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mb-10">
+      <button id="nextBtn" class="btn-primary block shadow-lg opacity-50 cursor-not-allowed">
+        下一步
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    // 用于存储用户选择
+    let selectedFrequency = null;
+    let selectedIntensity = null;
+    
+    // 元素引用
+    const nextBtn = document.getElementById('nextBtn');
+    const recommendBtn = document.getElementById('recommendBtn');
+    
+    // 选择运动频率
+    function selectFrequency(element, value) {
+      // 清除其他选项的选中状态
+      const options = document.querySelectorAll('.exercise-option');
+      options.forEach(option => {
+        if (option.getAttribute('onclick').includes('selectFrequency')) {
+          option.classList.remove('selected');
+          option.querySelector('.check-dot').classList.add('hidden');
+        }
+      });
+      
+      // 设置当前选项的选中状态
+      element.classList.add('selected');
+      element.querySelector('.check-dot').classList.remove('hidden');
+      
+      // 存储选择
+      selectedFrequency = value;
+      
+      // 检查是否可以激活下一步按钮
+      checkNextButton();
+    }
+    
+    // 选择运动强度
+    function selectIntensity(element, value) {
+      // 清除其他选项的选中状态
+      const options = document.querySelectorAll('.exercise-option');
+      options.forEach(option => {
+        if (option.getAttribute('onclick').includes('selectIntensity')) {
+          option.classList.remove('selected');
+          option.querySelector('.check-dot').classList.add('hidden');
+        }
+      });
+      
+      // 设置当前选项的选中状态
+      element.classList.add('selected');
+      element.querySelector('.check-dot').classList.remove('hidden');
+      
+      // 存储选择
+      selectedIntensity = value;
+      
+      // 检查是否可以激活下一步按钮
+      checkNextButton();
+    }
+    
+    // 检查是否可以激活下一步按钮
+    function checkNextButton() {
+      if (selectedFrequency && selectedIntensity) {
+        nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        nextBtn.disabled = true;
+      }
+    }
+    
+    // 点击推荐按钮
+    recommendBtn.addEventListener('click', function() {
+      // 找到对应的元素
+      const frequencyOptions = document.querySelectorAll('.exercise-option');
+      let frequencyOption = null;
+      let intensityOption = null;
+      
+      // 寻找每周三次的选项
+      frequencyOptions.forEach(option => {
+        if (option.getAttribute('onclick').includes("selectFrequency(this, '3')")) {
+          frequencyOption = option;
+        }
+        if (option.getAttribute('onclick').includes("selectIntensity(this, 'moderate')")) {
+          intensityOption = option;
+        }
+      });
+      
+      // 选中推荐选项
+      if (frequencyOption) {
+        selectFrequency(frequencyOption, '3');
+      }
+      
+      if (intensityOption) {
+        selectIntensity(intensityOption, 'moderate');
+      }
+    });
+    
+    // 点击下一步按钮
+    nextBtn.addEventListener('click', function() {
+      if (selectedFrequency && selectedIntensity) {
+        // 存储用户选择
+        localStorage.setItem('exerciseFrequency', selectedFrequency);
+        localStorage.setItem('exerciseIntensity', selectedIntensity);
+        
+        // 跳转到下一页
+        window.location.href = 'meal-frequency.html';
+      }
+    });
+  </script>
+</body>
+</html> 

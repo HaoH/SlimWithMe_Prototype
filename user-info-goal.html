@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - 减重目标</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
@@ -31,7 +32,7 @@
     .progress-fill {
       height: 100%;
       background-color: #48bb78;
-      width: 66.6%;
+      width: 45%;
     }
     
     .btn-primary {
@@ -43,6 +44,69 @@
       font-size: 18px;
       width: 100%;
       text-align: center;
+    }
+    
+    .back-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      color: #4b5563;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .weight-slider {
+      width: 100%;
+      margin: 16px 0;
+    }
+    
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #48bb78;
+      cursor: pointer;
+      margin-top: -8px;
+      border: 3px solid white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #e2e8f0;
+      border-radius: 3px;
+    }
+    
+    .weight-input {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 18px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .goal-stats {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
     }
     
     .goal-input {
@@ -69,6 +133,11 @@
   </style>
 </head>
 <body class="bg-white">
+  <!-- 返回按钮 -->
+  <a href="user-info-diet.html" class="back-button">
+    <i class="ri-arrow-left-s-line text-xl"></i>
+  </a>
+
   <div class="info-container">
     <div class="mt-4">
       <div class="progress-bar">
