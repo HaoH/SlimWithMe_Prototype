@@ -749,10 +749,21 @@
               iframeDoc.head.appendChild(styleEl);
             }
             
-            // 删除iframe中的导航条（如果存在）
+            // 处理iframe中的导航条
             const navContainer = iframeDoc.getElementById('navigation-container');
             if (navContainer) {
+              // 默认隐藏所有预览页面中的导航条
               navContainer.style.display = 'none';
+              
+              // 对于ai-coach.html页面，额外添加处理确保导航条一定隐藏
+              if (this.src.includes('ai-coach.html')) {
+                navContainer.style.display = 'none';
+                // 添加额外的全屏效果
+                const mainContent = iframeDoc.getElementById('main-content');
+                if (mainContent) {
+                  mainContent.style.paddingBottom = '0';
+                }
+              }
             }
           } catch(e) {
             console.error("Cannot access iframe content:", e);

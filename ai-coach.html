@@ -236,9 +236,6 @@
     </div>
   </div>
   
-  <!-- 导航容器 -->
-  <div id="navigation-container" class="mt-auto"></div>
-  
   <script>
     // 页面加载时隐藏导航栏（如果有父窗口）
     window.addEventListener('DOMContentLoaded', function() {
@@ -247,12 +244,44 @@
       }
     });
     
-    // 返回按钮点击事件处理
-    document.getElementById('backButton').addEventListener('click', function() {
+    // 返回按钮点击事件处理 - 返回到行动页面
+    document.getElementById('backButton').addEventListener('click', function(event) {
+      // 阻止事件默认行为和冒泡
+      event.preventDefault();
+      event.stopPropagation();
+      
+      console.log("返回按钮被点击，正在返回到 action.html");
+      
+      // 如果在预览框架中，通知父窗口显示导航栏
       if (window.parent && window.parent.showNavigation) {
         window.parent.showNavigation();
       }
+      
+      // 返回到行动页面 - 尝试直接设置 location
       window.location.href = 'action.html';
+      
+      // 备用方案，以防上面的方法不起作用
+      setTimeout(function() {
+        window.location.replace('action.html');
+      }, 100);
+    });
+    
+    // 添加页面加载完成后的额外检查
+    window.addEventListener('load', function() {
+      console.log("页面加载完成，确保返回按钮正常工作");
+      const backButton = document.getElementById('backButton');
+      
+      // 确保按钮样式明确显示为可点击
+      if (backButton) {
+        backButton.style.cursor = 'pointer';
+        backButton.classList.add('hover:bg-gray-100');
+        
+        // 添加备用点击处理
+        backButton.onclick = function() {
+          console.log("备用点击处理触发");
+          window.location.href = 'action.html';
+        };
+      }
     });
     
     // 页面滚动到底部
