@@ -15,7 +15,8 @@ function createNavigation() {
     { icon: '<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>', text: '行动', url: 'home.html' },
     { icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>', text: 'AI教练', url: 'ai-coach.html' },
     { icon: '<path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>', text: '拍照', url: 'camera.html', special: true },
-    { icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>', text: '成就', url: 'achievements.html' },
+    { icon: '<path d="M5 3h10v3c0 2.8-1.5 5.5-4 6.5L11 14h-2l0-1.5C6.5 11.5 5 8.8 5 6V3zm-1 0v3c0 4 2.5 7 6 8 3.5-1 6-4 6-8V3H4zm4 13h4v3h-4v-3zm2-19c-1 0-5 0-5 0v2h10V-3c0 0-4 0-5 0z"></path>', text: '成就', url: 'achievements.html' },
+    { icon: '<path d="M6 3h12l-2 7c-1 3-3 5-5 5s-4-2-5-5L4 3h2zm8 14H10v2h4v-2zm0 3H10v1h4v-1z"></path>', text: '成就', url: 'achievements.html' },
     { icon: '<path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>', text: '我的', url: 'profile.html' }
   ];
   
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         id: 'home',
         name: '行动',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-14 0l2 2m12-4v10a2 2 0 01-2 2H6a2 2 0 01-2-2V10a2 2 0 012-2h2"></path></svg>',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>',
         link: 'home.html'
       },
       {
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         id: 'achievements',
         name: '成就',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4h8m-4 4v6m-2 2h4m-4 2h4M6 4v3c0 3.3 2.7 6 6 6s6-2.7 6-6V4m6 11v3m-3 2h6"></path></svg>',
         link: 'achievements.html'
       },
       {
