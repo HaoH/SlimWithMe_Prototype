@@ -1,0 +1,177 @@
+/**
+ * Remix Icon样式定义
+ * 这个文件包含应用中所有Remix Icon图标的样式和应用规则
+ */
+
+/* 基本图标样式 */
+.ri {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 导航图标 */
+.nav-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* 按钮图标 */
+.btn-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+/* 标题图标 */
+.header-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+  color: inherit;
+}
+
+/* 状态栏图标 */
+.status-icon {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* 特定图标样式 */
+.ri-signal-tower-fill,
+.ri-wifi-fill,
+.ri-battery-fill {
+  color: #000;
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+/* 按钮内图标位置调整 */
+button i, 
+a i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 列表图标 */
+.list-icon {
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* 替换特定SVG为Remix Icon的样式调整 */
+.svg-icon-replaced {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图标尺寸类 */
+.icon-xs { font-size: 0.75rem; }
+.icon-sm { font-size: 0.875rem; }
+.icon-md { font-size: 1rem; }
+.icon-lg { font-size: 1.25rem; }
+.icon-xl { font-size: 1.5rem; }
+.icon-2xl { font-size: 2rem; }
+.icon-3xl { font-size: 3rem; }
+
+/* 添加对SVG常见类名的支持，以便自动替换后保持原样式 */
+/* 支持Tailwind的尺寸类 */
+i.h-3, i.w-3 { font-size: 0.75rem; }
+i.h-4, i.w-4 { font-size: 1rem; }
+i.h-5, i.w-5 { font-size: 1.25rem; }
+i.h-6, i.w-6 { font-size: 1.5rem; }
+i.h-8, i.w-8 { font-size: 2rem; }
+i.h-10, i.w-10 { font-size: 2.5rem; }
+i.h-12, i.w-12 { font-size: 3rem; }
+
+/* 支持Tailwind的颜色类 */
+i.text-gray-600 { color: #4b5563; }
+i.text-gray-400 { color: #9ca3af; }
+i.text-indigo-600 { color: #4f46e5; }
+i.text-blue-500, i.text-blue-600 { color: #3b82f6; }
+i.text-green-500, i.text-green-600 { color: #10b981; }
+i.text-red-500, i.text-red-600 { color: #ef4444; }
+i.text-yellow-500, i.text-yellow-600 { color: #f59e0b; }
+i.text-purple-500, i.text-purple-600 { color: #8b5cf6; }
+i.text-white { color: #ffffff; }
+
+/* 支持Tailwind的间距类 */
+i.mr-1 { margin-right: 0.25rem; }
+i.mr-2 { margin-right: 0.5rem; }
+i.mr-3 { margin-right: 0.75rem; }
+i.mr-4 { margin-right: 1rem; }
+
+/* 特定图标样式覆盖 */
+/* 导航栏图标 */
+.bottom-navigation i {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+/* 相机页面图标 */
+.camera-controls i {
+  font-size: 2rem;
+  color: white;
+}
+
+/* 饮食记录图标 */
+.diet-item i {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+/* 成就页面图标 */
+.achievement-card i {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 个人资料图标 */
+.profile-section i {
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  color: #4b5563;
+}
+
+/* AI教练页面图标 */
+.ai-coach-message i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* 行动页面图标 */
+.action-card i {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+/* 页面标题图标 */
+.page-title i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* 返回按钮图标 */
+.back-button i {
+  font-size: 1.5rem;
+}
+
+/* 关闭按钮图标 */
+.close-button i {
+  font-size: 1.5rem;
+}
+
+/* 卡片和列表项图标样式 */
+.card-icon i, .list-item-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(79, 70, 229, 0.1);
+  color: #4f46e5;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+} 

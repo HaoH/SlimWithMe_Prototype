@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - AI教练</title>
+  <!-- 引入Remix Icon图标库 -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/navigation.js" defer></script>
   <style>
     .chat-container {
       background-image: url('https://images.unsplash.com/photo-1590439471364-192aa70c0b53?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
@@ -232,6 +235,9 @@
       </button>
     </div>
   </div>
+  
+  <!-- 导航容器 -->
+  <div id="navigation-container" class="mt-auto"></div>
   
   <script>
     // 页面加载时隐藏导航栏（如果有父窗口）

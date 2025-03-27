@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>轻卡伴侣 - 成就</title>
+  <!-- 引入Remix Icon图标库 -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/navigation.js" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
   <div id="app" class="h-screen flex flex-col max-w-md mx-auto overflow-hidden relative bg-white">
@@ -230,11 +233,8 @@
     </main>
     
     <!-- 导航容器 -->
-    <div id="navigation-container"></div>
+    <div id="navigation-container" class="mt-auto"></div>
   </div>
-  
-  <!-- 引入导航组件 -->
-  <script src="js/navigation.js"></script>
   
   <script>
     // 体重变化趋势图表
@@ -359,5 +359,9 @@
       }
     });
   </script>
+  
+  <!-- 引入Remix Icon图标库 -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="css/icon-styles.css" rel="stylesheet">
 </body>
 </html> 
