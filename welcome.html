@@ -11,6 +11,7 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      background-color: white;
     }
     
     .welcome-container {
@@ -19,10 +20,70 @@
       justify-content: space-between;
       height: 100%;
       padding: 20px;
+      border: 12px solid #1a1a1a;
+      border-radius: 40px;
+      background-color: white;
+      position: relative;
+      overflow: hidden;
     }
     
-    .gradient-bg {
-      background: linear-gradient(135deg, #48bb78 0%, #38b2ac 100%);
+    .notch-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background-color: white;
+      z-index: 10;
+    }
+    
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 30px;
+      background-color: #1a1a1a;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      z-index: 11;
+    }
+    
+    .speaker {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 6px;
+      background-color: #333;
+      border-radius: 3px;
+    }
+    
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9;
+    }
+    
+    .status-bar .time {
+      font-weight: 600;
+      font-size: 15px;
+      color: #000;
+    }
+    
+    .status-bar .icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     
     .btn-primary {
@@ -34,43 +95,69 @@
       font-size: 18px;
       width: 100%;
       text-align: center;
+      transition: all 0.2s;
     }
     
-    .wave-animation {
-      animation: wave 2s infinite ease-in-out;
+    .btn-primary:hover {
+      background-color: #38a169;
+      transform: translateY(-1px);
     }
     
-    @keyframes wave {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
+    .app-logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+    
+    .content-wrapper {
+      margin-top: 44px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 0;
     }
   </style>
 </head>
-<body class="bg-white">
+<body>
   <div class="welcome-container">
-    <div class="mt-10">
-      <h1 class="text-3xl font-bold text-center text-gray-800">轻卡伴侣</h1>
-      <p class="text-center text-gray-600 mt-2">吃你想吃的，减你该减的</p>
-    </div>
-    
-    <div class="flex-grow flex items-center justify-center">
-      <div class="text-center">
-        <img src="https://cdn.jsdelivr.net/gh/tailwindlabs/heroicons@latest/optimized/24/outline/scale.svg" class="w-32 h-32 mx-auto mb-6 text-green-500 wave-animation" />
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">轻松减重，健康生活</h2>
-        <p class="text-gray-600 mb-2">科学饮食计划 · 智能食物识别</p>
-        <p class="text-gray-600">个性化运动建议 · AI减重助手</p>
+    <div class="notch-container">
+      <div class="notch">
+        <div class="speaker"></div>
+      </div>
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="icons">
+          <i class="ri-signal-tower-fill"></i>
+          <i class="ri-wifi-fill"></i>
+          <i class="ri-battery-fill"></i>
+        </div>
       </div>
     </div>
     
-    <div class="mb-10">
-      <a href="user-info-height.html" class="btn-primary block shadow-lg">
-        开始轻卡之旅
-      </a>
-      <p class="text-center text-gray-500 text-sm mt-4">点击按钮，开启健康生活方式</p>
+    <div class="content-wrapper">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">带你瘦</h1>
+        <p class="text-gray-600">吃你想吃的，减你该减的</p>
+      </div>
+      
+      <div class="flex-grow flex items-center justify-center">
+        <div class="text-center">
+          <img src="images/app-logo.png" alt="带你瘦" class="app-logo" />
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4">轻松瘦身，健康生活</h2>
+          <p class="text-gray-600 mb-2">科学饮食计划 · 智能食物识别</p>
+          <p class="text-gray-600">个性化运动建议 · AI减重助手</p>
+        </div>
+      </div>
+      
+      <div>
+        <a href="user-info-height.html" class="btn-primary block shadow-lg">
+          带你瘦
+        </a>
+        <p class="text-center text-gray-500 text-sm mt-4">点击按钮，开启健康生活方式</p>
+      </div>
     </div>
   </div>
 </body>

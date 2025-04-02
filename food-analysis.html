@@ -92,6 +92,20 @@
       margin-right: 4px;
     }
     
+    .header-right {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 4px 12px;
+      border-radius: 16px;
+    }
+    
+    .header-time {
+      font-size: 14px;
+      font-weight: 500;
+      color: #4a5568;
+    }
+    
     .analysis-summary {
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 16px;
@@ -163,12 +177,19 @@
     
     .food-item {
       display: flex;
-      align-items: center;
-      margin-bottom: 16px;
+      flex-direction: column;
+      margin-bottom: 24px;
       background-color: rgba(247, 250, 252, 0.9);
       border-radius: 12px;
-      padding: 12px;
+      padding: 0;
       border: 1px solid rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .food-item-header {
+      display: flex;
+      padding: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
     
     .food-image {
@@ -207,6 +228,509 @@
       font-weight: 600;
     }
     
+    .food-suggestion {
+      font-size: 12px;
+      color: #4a5568;
+      padding: 12px;
+      background-color: rgba(237, 242, 247, 0.5);
+    }
+    
+    .food-suggestion-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .food-suggestion-heading {
+      display: flex;
+      align-items: center;
+    }
+    
+    .food-suggestion-heading svg {
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+      color: #4299e1;
+    }
+    
+    .food-suggestion-toggle {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+    }
+    
+    .food-suggestion-toggle svg {
+      width: 16px;
+      height: 16px;
+      color: #718096;
+    }
+    
+    .food-suggestion p {
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+      max-height: 200px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    
+    .food-suggestion.collapsed p {
+      max-height: 0;
+      opacity: 0;
+      margin: 0;
+    }
+    
+    .warning {
+      background-color: rgba(254, 226, 226, 0.5);
+    }
+    
+    .warning .food-suggestion-title {
+      color: #c53030;
+    }
+    
+    .warning .food-suggestion-title svg {
+      color: #f56565;
+    }
+    
+    .neutral {
+      background-color: rgba(254, 243, 199, 0.5);
+    }
+    
+    .neutral .food-suggestion-title {
+      color: #b7791f;
+    }
+    
+    .neutral .food-suggestion-title svg {
+      color: #ecc94b;
+    }
+    
+    .positive {
+      background-color: rgba(198, 246, 213, 0.5);
+    }
+    
+    .positive .food-suggestion-title {
+      color: #2f855a;
+    }
+    
+    .positive .food-suggestion-title svg {
+      color: #48bb78;
+    }
+    
+    .calorie-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+    
+    .calorie-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(
+        #48bb78 0% var(--progress-percent, 63%),
+        #e2e8f0 var(--progress-percent, 63%) 100%
+      );
+      mask: radial-gradient(transparent 55%, white 56%);
+      -webkit-mask: radial-gradient(transparent 55%, white 56%);
+    }
+    
+    .calorie-progress.over-limit {
+      background: conic-gradient(
+        #f56565 0% 100%
+      );
+    }
+    
+    /* 新的热量图表样式 */
+    .calorie-container {
+      width: 100%;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 0 auto 16px;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 16px;
+      padding-bottom: 24px;
+    }
+    
+    .calorie-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .calorie-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #4a5568;
+      margin-bottom: 4px;
+    }
+    
+    .calorie-total {
+      font-size: 36px;
+      font-weight: 700;
+      color: #2d3748;
+      line-height: 1.2;
+    }
+    
+    .calorie-unit {
+      font-size: 14px;
+      color: #4a5568;
+      font-weight: 400;
+    }
+    
+    .calorie-chart {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .calorie-level {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      transition: height 0.8s ease;
+    }
+    
+    .calorie-level-previous {
+      background-color: #e2e8f0;
+      height: var(--previous-level, 40%);
+      bottom: 0;
+      z-index: 1;
+    }
+    
+    .calorie-level-current {
+      background-color: #68d391;
+      height: var(--current-level, 23%);
+      bottom: var(--previous-level, 40%);
+      z-index: 2;
+      transition: height 0.8s ease, background-color 0.3s ease;
+    }
+    
+    .calorie-level-current-overflow {
+      background-color: #fc8181;
+      border-top: 2px dashed #f56565;
+      transition: height 0.8s ease;
+    }
+    
+    .calorie-level-current-with-border {
+      border: 2px solid rgba(104, 211, 145, 0.8);
+    }
+    
+    .calorie-level-remaining {
+      background-color: rgba(237, 242, 247, 0.7);
+      height: var(--remaining-level, 37%);
+      bottom: calc(var(--previous-level, 40%) + var(--current-level, 23%));
+      z-index: 3;
+    }
+    
+    .calorie-level-overflow {
+      background-color: #fc8181;
+      height: var(--overflow-level, 0%);
+      bottom: calc(var(--previous-level, 40%) + var(--current-level, 23%));
+      z-index: 4;
+    }
+    
+    .calorie-target-line {
+      position: absolute;
+      width: calc(100% + 4px);
+      height: 3px;
+      background-color: #f56565;
+      bottom: 60%;  /* 固定位置，不受当前热量影响 */
+      left: -2px;
+      z-index: 5;
+      box-shadow: 0 0 4px rgba(245, 101, 101, 0.5);
+    }
+    
+    .calorie-scale {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px 0;
+      z-index: 6;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-right: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+    
+    .calorie-scale-mark {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #4a5568;
+      font-weight: 500;
+      padding-left: 3px;
+    }
+    
+    .calorie-scale-mark::before {
+      content: '';
+      width: 8px;
+      height: 1px;
+      background-color: #a0aec0;
+      margin-right: 4px;
+    }
+    
+    /* 新增热量标注样式 */
+    .calorie-label {
+      position: absolute;
+      right: 10px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 10;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .calorie-target-text {
+      bottom: 60%;
+      transform: translateY(10px);
+      color: #f56565;
+      border: 1px solid #f56565;
+    }
+    
+    .calorie-current-text {
+      bottom: 42%;
+      color: #48bb78;
+      border: 1px solid #48bb78;
+    }
+    
+    .calorie-previous-text {
+      bottom: 5px;
+      color: #718096;
+      border: 1px solid #a0aec0;
+    }
+    
+    .calorie-remaining-text {
+      bottom: 45%;
+      color: #4299e1;
+      border: 1px solid #4299e1;
+    }
+    
+    .calorie-overflow-text {
+      bottom: 65%;
+      color: #f56565;
+      border: 1px solid #f56565;
+    }
+    
+    .calorie-target-label {
+      position: absolute;
+      right: -5px;
+      bottom: calc(40% + 23%);
+      transform: translateY(-50%);
+      background-color: #f56565;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px 0 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+      z-index: 5;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .calorie-scale {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px 0;
+      z-index: 6;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-right: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+    
+    .calorie-scale-mark {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: #4a5568;
+      font-weight: 500;
+      padding-left: 3px;
+    }
+    
+    .calorie-scale-mark::before {
+      content: '';
+      width: 8px;
+      height: 1px;
+      background-color: #a0aec0;
+      margin-right: 4px;
+    }
+    
+    .calorie-number-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .calorie-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: #2d3748;
+      line-height: 1;
+    }
+    
+    .calorie-goal {
+      font-size: 14px;
+      color: #4a5568;
+      margin-top: 6px;
+    }
+    
+    .calorie-status-text {
+      font-size: 16px;
+      color: #4a5568;
+      margin: 10px 0;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .calorie-remaining {
+      font-size: 20px;
+      font-weight: 700;
+      color: #48bb78;
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .calorie-overflow {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f56565;
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .calorie-close {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ed8936;
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .calorie-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      width: 100%;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #4a5568;
+    }
+    
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-right: 6px;
+    }
+    
+    .legend-previous {
+      background-color: #e2e8f0;
+    }
+    
+    .legend-current {
+      background-color: #68d391;
+    }
+    
+    .legend-remaining {
+      background-color: rgba(237, 242, 247, 0.7);
+    }
+    
+    .legend-overflow {
+      background-color: #fc8181;
+    }
+    
+    .calorie-status {
+      position: absolute;
+      bottom: -10px;
+      background: var(--status-color, #48bb78);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .calorie-status.over-limit {
+      background-color: #f56565;
+    }
+    
+    .calorie-status.warning {
+      background-color: #ed8936;
+    }
+    
+    .calorie-status svg {
+      margin-right: 4px;
+      width: 16px;
+      height: 16px;
+    }
+    
+    .calorie-percent {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      background: #48bb78;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .detailed-nutrients {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .food-suggestion .positive .food-suggestion-title svg {
+      color: #48bb78;
+    }
+    
     .action-bar {
       display: flex;
       justify-content: space-between;
@@ -236,10 +760,11 @@
     }
     
     .total-calories {
-      margin-top: 8px;
+      margin-top: 16px;
       text-align: right;
       font-size: 14px;
       color: #718096;
+      padding: 0 12px 12px;
     }
     
     .calorie-value {
@@ -301,6 +826,21 @@
       font-size: 13px;
       color: #4a5568;
     }
+    
+    .overflow-label {
+      position: absolute;
+      padding: 4px 8px;
+      background-color: #f56565;
+      color: white;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      left: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -330,22 +870,172 @@
             午餐
           </div>
         </div>
-        <span class="text-sm text-gray-600">2023年12月25日 12:30</span>
+        <div class="header-right">
+          <span class="header-time">2023年12月25日 12:30</span>
+        </div>
       </div>
       
+      <!-- 突出显示总热量 -->
       <div class="analysis-summary">
+        <div class="summary-title">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          总热量分析
+        </div>
+        
+        <div class="calorie-container" id="calorieContainer">
+          <div class="calorie-header">
+            <div class="calorie-title">午餐总热量</div>
+            <div class="calorie-total">532<span class="calorie-unit">千卡</span></div>
+          </div>
+          
+          <div class="calorie-chart">
+            <div class="calorie-level calorie-level-previous"></div>
+            <div class="calorie-level calorie-level-current"></div>
+            <div class="calorie-level calorie-level-remaining"></div>
+            <div class="calorie-level calorie-level-overflow"></div>
+            <div class="calorie-target-line"></div>
+            <div class="calorie-scale">
+              <div class="calorie-scale-mark">850</div>
+              <div class="calorie-scale-mark">680</div>
+              <div class="calorie-scale-mark">510</div>
+              <div class="calorie-scale-mark">340</div>
+              <div class="calorie-scale-mark">170</div>
+              <div class="calorie-scale-mark">0</div>
+            </div>
+            
+            <!-- 热量标注 -->
+            <div class="calorie-label calorie-target-text">目标: 850千卡</div>
+            <div class="calorie-label calorie-current-text">当前餐: 192千卡</div>
+            <div class="calorie-label calorie-previous-text">已摄入: 340千卡</div>
+            <div class="calorie-label calorie-remaining-text">剩余: 318千卡</div>
+          </div>
+        </div>
+        
+        <div class="recommendation">
+          <div class="recommendation-title">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            热量建议
+          </div>
+          <div class="recommendation-text">
+            您的午餐热量在计划范围内，接下来可以添加一些水果或低脂酸奶作为餐后点心，保持能量平衡。
+          </div>
+        </div>
+      </div>
+      
+      <div class="food-list">
+        <div class="food-list-title">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          识别到的食物
+        </div>
+        
+        <div class="food-item">
+          <div class="food-item-header">
+            <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1518779578993-ec3579fee39f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
+            <div class="food-details">
+              <div class="food-name">米饭</div>
+              <div class="food-info">
+                <div class="food-weight">预估重量: 150g</div>
+                <div class="food-calories">195 kcal</div>
+              </div>
+            </div>
+          </div>
+          <div class="food-suggestion warning">
+            <div class="food-suggestion-title">
+              <div class="food-suggestion-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                碳水含量高
+              </div>
+              <div class="food-suggestion-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                </svg>
+              </div>
+            </div>
+            <p>米饭的摄入量偏多，建议减少至100g（约半碗），可添加更多蔬菜代替部分主食。饭前喝一杯水也有助于控制主食摄入量。</p>
+          </div>
+        </div>
+        
+        <div class="food-item">
+          <div class="food-item-header">
+            <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1603073163308-9627e2ee1eac?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
+            <div class="food-details">
+              <div class="food-name">清炒西兰花</div>
+              <div class="food-info">
+                <div class="food-weight">预估重量: 100g</div>
+                <div class="food-calories">55 kcal</div>
+              </div>
+            </div>
+          </div>
+          <div class="food-suggestion positive">
+            <div class="food-suggestion-title">
+              <div class="food-suggestion-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                优质选择
+              </div>
+              <div class="food-suggestion-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                </svg>
+              </div>
+            </div>
+            <p>西兰花富含维生素C和纤维素，建议可以增加至150g，替代部分米饭。烹饪时减少油量，保持半脆口感，可最大程度保留营养。</p>
+          </div>
+        </div>
+        
+        <div class="food-item">
+          <div class="food-item-header">
+            <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
+            <div class="food-details">
+              <div class="food-name">红烧排骨</div>
+              <div class="food-info">
+                <div class="food-weight">预估重量: 120g</div>
+                <div class="food-calories">282 kcal</div>
+              </div>
+            </div>
+          </div>
+          <div class="food-suggestion neutral">
+            <div class="food-suggestion-title">
+              <div class="food-suggestion-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                适量食用
+              </div>
+              <div class="food-suggestion-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                </svg>
+              </div>
+            </div>
+            <p>红烧排骨含有较高油脂和盐分，建议食用前用纸巾吸掉表面油脂，或用温水稍微冲洗一下去除部分酱汁和盐分。下次可尝试清蒸或水煮的烹饪方式，减少热量摄入。</p>
+          </div>
+        </div>
+        
+        <div class="total-calories">
+          总热量: <span class="calorie-value">532 kcal</span>
+        </div>
+      </div>
+      
+      <!-- 详细营养素分析（放在最后） -->
+      <div class="detailed-nutrients">
         <div class="summary-title">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
-          营养摄入分析
+          详细营养素分析
         </div>
         
         <div class="nutrient-grid">
-          <div class="nutrient-item">
-            <div class="nutrient-value">532</div>
-            <div class="nutrient-label">总热量 (kcal)</div>
-          </div>
           <div class="nutrient-item">
             <div class="nutrient-value">21g</div>
             <div class="nutrient-label">蛋白质</div>
@@ -366,6 +1056,10 @@
             <div class="nutrient-value">2.5g</div>
             <div class="nutrient-label">盐分</div>
           </div>
+          <div class="nutrient-item">
+            <div class="nutrient-value">12g</div>
+            <div class="nutrient-label">糖分</div>
+          </div>
         </div>
         
         <div class="recommendation">
@@ -373,57 +1067,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            膳食建议
+            综合膳食建议
           </div>
           <div class="recommendation-text">
-            这餐碳水占比较高，您可以适当增加蛋白质摄入，减少米饭的分量。
+            总体而言，这餐碳水占比较高，您可以适当增加蛋白质摄入，减少米饭的分量。盐分稍高，晚餐建议以清淡为主。可考虑添加富含纤维的蔬菜，如青菜、芹菜等，有助于控制血糖。
           </div>
-        </div>
-      </div>
-      
-      <div class="food-list">
-        <div class="food-list-title">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-          </svg>
-          识别到的食物
-        </div>
-        
-        <div class="food-item">
-          <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1518779578993-ec3579fee39f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
-          <div class="food-details">
-            <div class="food-name">米饭</div>
-            <div class="food-info">
-              <div class="food-weight">预估重量: 150g</div>
-              <div class="food-calories">195 kcal</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="food-item">
-          <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1603073163308-9627e2ee1eac?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
-          <div class="food-details">
-            <div class="food-name">清炒西兰花</div>
-            <div class="food-info">
-              <div class="food-weight">预估重量: 100g</div>
-              <div class="food-calories">55 kcal</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="food-item">
-          <div class="food-image" style="background-image: url('https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80');"></div>
-          <div class="food-details">
-            <div class="food-name">红烧排骨</div>
-            <div class="food-info">
-              <div class="food-weight">预估重量: 120g</div>
-              <div class="food-calories">282 kcal</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="total-calories">
-          总热量: <span class="calorie-value">532 kcal</span>
         </div>
       </div>
     </div>
@@ -447,7 +1095,157 @@
       loadingIndicator.style.display = 'none';
       analysisContainer.style.opacity = 1;
       analysisContainer.style.transition = 'opacity 0.5s';
+      
+      // 设置当前卡路里状态
+      setCalorieStatus();
     }, 2000);
+    
+    // 设置卡路里状态
+    function setCalorieStatus(current, target) {
+      // 获取相关元素
+      const calorieContainer = document.getElementById('calorieContainer');
+      const calorieLevels = calorieContainer.querySelector('.calorie-chart');
+      const calorieLevelPrevious = calorieLevels.querySelector('.calorie-level-previous');
+      const calorieLevelCurrent = calorieLevels.querySelector('.calorie-level-current');
+      const calorieLevelRemaining = calorieLevels.querySelector('.calorie-level-remaining');
+      const calorieLevelOverflow = calorieLevels.querySelector('.calorie-level-overflow');
+      const calorieTarget = calorieLevels.querySelector('.calorie-target-text');
+      const calorieCurrent = calorieLevels.querySelector('.calorie-current-text');
+      const caloriePrevious = calorieLevels.querySelector('.calorie-previous-text');
+      const recommendationText = document.querySelector('.recommendation-text');
+      
+      // 获取或移除多余的标签
+      let calorieRemaining = calorieLevels.querySelector('.calorie-remaining-text');
+      let calorieOverflow = calorieLevels.querySelector('.calorie-overflow-text');
+      let calorieCurrentOverflow = calorieLevels.querySelector('.calorie-level-current-overflow');
+      let overflowLabel = calorieLevels.querySelector('.overflow-label');
+      
+      if (calorieRemaining) calorieRemaining.remove();
+      if (calorieOverflow) calorieOverflow.remove();
+      if (calorieCurrentOverflow) calorieCurrentOverflow.remove();
+      if (overflowLabel) overflowLabel.remove();
+      
+      // 去除可能存在的边框类
+      calorieLevelCurrent.classList.remove('calorie-level-current-with-border');
+      
+      // 获取当前卡路里和目标值
+      const currentCalories = current || 532;
+      const targetCalories = target || 850;
+      const percent = Math.round((currentCalories / targetCalories) * 100);
+      
+      // 假设基础摄入和当前餐的比例关系
+      const previousCalories = targetCalories * 0.4; // 基础摄入340卡路里
+      const previousPercent = 40; // 占总目标的40%
+      const currentMealCalories = currentCalories - previousCalories; // 当前餐的卡路里
+      const currentPercent = Math.round((currentMealCalories / targetCalories) * 100); // 当前餐占总目标的百分比
+      
+      // 目标线固定在60%处
+      const targetLinePosition = 60;
+      
+      // 计算剩余和超出
+      let remainingPercent = 0;
+      let overflowPercent = 0;
+      
+      // 根据当前总热量计算剩余或超出部分
+      if (currentCalories <= targetCalories) {
+        // 未超出目标
+        remainingPercent = targetLinePosition - previousPercent - currentPercent;
+        overflowPercent = 0;
+        
+        // 确保剩余比例不为负数
+        if (remainingPercent < 0) remainingPercent = 0;
+        
+        // 调整当前餐的显示位置
+        calorieLevelCurrent.style.height = currentPercent + '%';
+        calorieLevelCurrent.style.bottom = previousPercent + '%';
+        // 为当前餐添加边框
+        calorieLevelCurrent.classList.add('calorie-level-current-with-border');
+        
+        // 调整剩余部分的位置
+        calorieLevelRemaining.style.height = remainingPercent + '%';
+        calorieLevelRemaining.style.bottom = (previousPercent + currentPercent) + '%';
+        
+        // 确保剩余超过0才显示标签
+        if (remainingPercent > 0) {
+          const newRemaining = document.createElement('div');
+          newRemaining.className = 'calorie-label calorie-remaining-text';
+          newRemaining.textContent = `剩余: ${targetCalories - currentCalories}千卡`;
+          calorieLevels.appendChild(newRemaining);
+        }
+      } else {
+        // 超出目标
+        remainingPercent = 0;
+        
+        // 计算当前餐合理部分（目标线以下的部分）
+        const reasonableAmount = targetCalories - previousCalories; // 合理摄入的当前餐卡路里
+        const reasonablePercent = Math.round((reasonableAmount / targetCalories) * 100); // 合理部分占总目标的百分比
+        
+        // 计算当前餐超出部分（目标线以上的部分）
+        const excessAmount = currentMealCalories - reasonableAmount; // 超出的当前餐卡路里
+        const excessPercent = Math.round((excessAmount / targetCalories) * 100); // 超出部分占总目标的百分比
+        
+        // 调整当前餐合理部分（仅显示到目标线）
+        calorieLevelCurrent.style.height = reasonablePercent + '%';
+        calorieLevelCurrent.style.bottom = previousPercent + '%';
+        // 为当前餐合理部分添加边框
+        calorieLevelCurrent.classList.add('calorie-level-current-with-border');
+        
+        // 创建当前餐超出部分元素（只含超出标签）
+        const currentOverflowElement = document.createElement('div');
+        currentOverflowElement.className = 'overflow-label';
+        currentOverflowElement.textContent = '超出';
+        currentOverflowElement.style.left = '60px';
+        currentOverflowElement.style.top = '50%';
+        currentOverflowElement.style.transform = 'translateY(-50%)';
+        
+        // 创建红色线条区域（只显示红色线条）
+        const redStrip = document.createElement('div');
+        redStrip.className = 'calorie-level calorie-level-current-overflow';
+        redStrip.style.height = '12px'; // 固定高度的红色条
+        redStrip.style.bottom = targetLinePosition + '%';
+        redStrip.style.width = '100%';
+        redStrip.style.position = 'absolute';
+        redStrip.style.left = '0';
+        redStrip.style.zIndex = '4';
+        redStrip.style.backgroundColor = '#fc8181';
+        redStrip.style.borderTop = '2px dashed #f56565';
+        redStrip.style.borderBottom = '2px dashed #f56565';
+        
+        // 添加红色条和超出标签
+        calorieLevels.appendChild(redStrip);
+        redStrip.appendChild(currentOverflowElement);
+        
+        // 超出目标线的部分不再使用原来的overflow区域
+        calorieLevelOverflow.style.height = '0%';
+        
+        // 显示超出标签
+        const newOverflow = document.createElement('div');
+        newOverflow.className = 'calorie-label calorie-overflow-text';
+        newOverflow.textContent = `超出: ${currentCalories - targetCalories}千卡`;
+        calorieLevels.appendChild(newOverflow);
+      }
+      
+      // 更新样式变量
+      document.documentElement.style.setProperty('--previous-level', previousPercent + '%');
+      
+      // 更新热量数值显示
+      document.querySelector('.calorie-total').innerHTML = currentMealCalories + '<span class="calorie-unit">千卡</span>';
+      calorieTarget.textContent = `目标: ${targetCalories}千卡`;
+      calorieCurrent.textContent = `当前餐: ${currentMealCalories}千卡`;
+      caloriePrevious.textContent = `已摄入: ${previousCalories}千卡`;
+      
+      // 根据情况更新推荐文本
+      if (percent > 100) {
+        // 超出目标
+        recommendationText.innerHTML = `您的午餐热量已超出计划目标，建议减少高碳水食物的摄入，用蔬菜代替部分主食，晚餐需要适当控制总热量。`;
+      } else if (percent >= 80) {
+        // 接近目标
+        recommendationText.innerHTML = `您的午餐热量接近计划上限，建议餐后适量活动，如散步15-20分钟，以促进消化和能量消耗。`;
+      } else {
+        // 正常范围
+        recommendationText.innerHTML = `您的午餐热量在计划范围内，接下来可以添加一些水果或低脂酸奶作为餐后点心，保持能量平衡。`;
+      }
+    }
     
     // 重新拍摄按钮
     rescanBtn.addEventListener('click', function() {
@@ -462,6 +1260,23 @@
     // 关闭按钮
     closeBtn.addEventListener('click', function() {
       window.location.href = 'action.html';
+    });
+    
+    // 添加切换功能
+    let demoState = 0;
+    document.querySelector('.calorie-container').addEventListener('click', function() {
+      demoState = (demoState + 1) % 3;
+      
+      if (demoState === 0) {
+        // 正常状态
+        setCalorieStatus(532, 850);
+      } else if (demoState === 1) {
+        // 接近目标
+        setCalorieStatus(700, 850);
+      } else {
+        // 超出目标
+        setCalorieStatus(920, 850);
+      }
     });
   </script>
   

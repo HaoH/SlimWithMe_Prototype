@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>完整日历 - 带你瘦</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    
+    .calendar-day {
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      border-radius: 50%;
+      background-color: #f3f4f6;
+      cursor: pointer;
+    }
+    
+    .calendar-day.empty {
+      color: #9ca3af;
+      background-color: transparent;
+    }
+    
+    .calendar-day.today {
+      background-color: #818cf8;
+      color: white;
+      font-weight: 500;
+    }
+    
+    .calendar-day.completed {
+      background-color: #34d399;
+      color: white;
+    }
+    
+    .calendar-day.partial {
+      background-color: #f59e0b;
+      color: white;
+    }
+    
+    .status-bar {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- 状态栏 -->
+  <div class="status-bar bg-white border-b border-gray-200">
+    <div class="flex items-center">
+      <button onclick="window.history.back()" class="mr-2">
+        <i class="ri-arrow-left-s-line text-xl text-blue-500"></i>
+      </button>
+      <h1 class="text-lg font-semibold">完整日历</h1>
+    </div>
+    <div></div>
+  </div>
+  
+  <main class="flex-grow p-4">
+    <div class="bg-white rounded-xl shadow-sm p-5 mb-5">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">2023年6月</h2>
+        <div class="flex space-x-2">
+          <button class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <i class="ri-arrow-left-s-line text-gray-600"></i>
+          </button>
+          <button class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <i class="ri-arrow-right-s-line text-gray-600"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- 星期标题 -->
+      <div class="grid grid-cols-7 gap-2 text-center mb-2">
+        <div class="text-sm font-medium text-gray-500">一</div>
+        <div class="text-sm font-medium text-gray-500">二</div>
+        <div class="text-sm font-medium text-gray-500">三</div>
+        <div class="text-sm font-medium text-gray-500">四</div>
+        <div class="text-sm font-medium text-gray-500">五</div>
+        <div class="text-sm font-medium text-gray-500">六</div>
+        <div class="text-sm font-medium text-gray-500">日</div>
+      </div>
+      
+      <!-- 日历网格 -->
+      <div class="calendar-grid">
+        <!-- 前一个月的日期 -->
+        <div class="calendar-day empty">29</div>
+        <div class="calendar-day empty">30</div>
+        <div class="calendar-day empty">31</div>
+        
+        <!-- 当前月的日期 -->
+        <div class="calendar-day">1</div>
+        <div class="calendar-day">2</div>
+        <div class="calendar-day">3</div>
+        <div class="calendar-day">4</div>
+        <div class="calendar-day completed">5</div>
+        <div class="calendar-day completed">6</div>
+        <div class="calendar-day completed">7</div>
+        <div class="calendar-day completed">8</div>
+        <div class="calendar-day completed">9</div>
+        <div class="calendar-day completed">10</div>
+        <div class="calendar-day completed">11</div>
+        <div class="calendar-day completed">12</div>
+        <div class="calendar-day completed">13</div>
+        <div class="calendar-day completed">14</div>
+        <div class="calendar-day completed">15</div>
+        <div class="calendar-day completed">16</div>
+        <div class="calendar-day completed">17</div>
+        <div class="calendar-day completed">18</div>
+        <div class="calendar-day completed">19</div>
+        <div class="calendar-day completed">20</div>
+        <div class="calendar-day completed">21</div>
+        <div class="calendar-day completed">22</div>
+        <div class="calendar-day completed">23</div>
+        <div class="calendar-day completed">24</div>
+        <div class="calendar-day completed">25</div>
+        <div class="calendar-day completed">26</div>
+        <div class="calendar-day completed">27</div>
+        <div class="calendar-day partial">28</div>
+        <div class="calendar-day today">29</div>
+        <div class="calendar-day">30</div>
+        
+        <!-- 下一个月的日期 -->
+        <div class="calendar-day empty">1</div>
+        <div class="calendar-day empty">2</div>
+      </div>
+      
+      <!-- 图例 -->
+      <div class="flex justify-between text-xs text-gray-500 mt-4">
+        <div class="flex items-center">
+          <div class="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+          <span>已完成</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+          <span>部分完成</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-3 h-3 rounded-full bg-indigo-400 mr-1"></div>
+          <span>今天</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 月度统计 -->
+    <div class="mt-6">
+      <h3 class="text-base font-semibold mb-2">本月数据</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-3">
+          <p class="text-sm text-gray-500 mb-1">月度完成率</p>
+          <p class="text-2xl font-bold text-indigo-600">92%</p>
+          <p class="text-xs text-gray-500">总共完成28天</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-3">
+          <p class="text-sm text-gray-500 mb-1">当月减重</p>
+          <p class="text-2xl font-bold text-green-600">2.8 kg</p>
+          <p class="text-xs text-gray-500">比上月提高了12%</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 每日详情 -->
+    <div class="mt-6">
+      <h3 class="text-base font-semibold mb-2">今日详情</h3>
+      <div class="bg-white rounded-lg shadow-sm p-4">
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-gray-500">2023年6月29日</span>
+          <span class="text-sm font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">今天</span>
+        </div>
+        
+        <div class="mt-3 space-y-3">
+          <div class="flex items-center">
+            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-2">
+              <i class="ri-fire-fill text-sm"></i>
+            </div>
+            <span class="text-sm">目标热量: 1800 千卡</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-2">
+              <i class="ri-restaurant-fill text-sm"></i>
+            </div>
+            <span class="text-sm">已摄入: 1250 千卡</span>
+          </div>
+          <div class="flex items-center">
+            <div class="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-2">
+              <i class="ri-run-fill text-sm"></i>
+            </div>
+            <span class="text-sm">运动消耗: 320 千卡</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html> 
